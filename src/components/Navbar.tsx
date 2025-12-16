@@ -7,9 +7,9 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center">
             <img
-              src="/andinia-textlogo.png"
+              src="/andinia-logo.png"
               alt="AndinIA"
-              className="h-14 w-auto"
+              className="h-16 w-auto"
             />
           </Link>
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Phone, Calendar, ShoppingBag, Heart } from 'lucide-react';
 import Footer from '../components/Footer';
+import ProductModal from '../components/ProductModal';
 
 interface GastronomiaProps {
   onOpenChat: () => void;
@@ -11,7 +12,10 @@ interface Product {
   icon: React.ElementType;
   title: string;
   description: string;
-  fullDescription: string;
+  modalTitle: string;
+  whatDoes: string;
+  painPoints: string;
+  copyLanding: string;
 }
 
 const products: Product[] = [
@@ -20,44 +24,60 @@ const products: Product[] = [
     icon: Phone,
     title: 'Voice-Bot Omnicanal',
     description: 'El teléfono que no te deja colgado',
-    fullDescription:
-      'Atiende llamadas 24/7, toma reservas y responde dudas del menú mientras vos servís. Tu asistente telefónico nunca duerme y siempre es amable.',
+    modalTitle: 'Voice-Bot Omnicanal: El teléfono que no te deja colgado',
+    whatDoes:
+      'Agente de voz IA que atiende 24/7. Toma reservas, coordina pedidos, responde dudas sobre el menú (celíacos, precios, promos), disponibilidad y horarios. Filtra llamadas comerciales.',
+    painPoints:
+      'Llamadas perdidas en hora pico, staff dividiéndose entre atender y servir, pedidos mal tomados.',
+    copyLanding: 'Querés alguien que sólo se encargue de atender el teléfono? Contratalo por menos del 5% de un sueldo.',
   },
   {
     id: 'reservas',
     icon: Calendar,
     title: 'Turnero & Reservas',
     description: 'Tu salón siempre lleno',
-    fullDescription:
-      'Reservas online con seña para evitar mesas vacías. Si cancelan, avisa a la lista de espera automáticamente. Maximizá la ocupación de tu local.',
+    modalTitle: 'Turnero & Mapa de Mesas: Tu salón ordenado y siempre lleno',
+    whatDoes:
+      'Sistema completo que une reservas (IG/WhatsApp/Web) con disponibilidad en tiempo real. Lista de espera que rellena huecos sola ante cancelación. Panel visual del salón. Opción de pedir seña.',
+    painPoints:
+      'Mesas vacías por no asistencias, doble reservas, puerta colapsada y horas perdidas coordinando a mano.',
+    copyLanding: 'Mirá el estado de tu salón en un panel. Rellenamos mesas cuando alguien se baja de la reserva.',
   },
   {
     id: 'pedido-omnicanal',
     icon: ShoppingBag,
     title: 'Pedido Omnicanal',
     description: 'Orden correcta, cocina feliz',
-    fullDescription:
-      'Centralizá pedidos de WhatsApp, Web y Teléfono en un solo formato claro para la cocina. Reducí errores y mejorá la comunicación con tu equipo.',
+    modalTitle: 'Pedido Omnicanal: Orden correcta, cocina feliz',
+    whatDoes:
+      'Centraliza pedidos de WhatsApp, IG, Web y Teléfono. El agente responde automáticamente sobre platos, ingredientes y normaliza el pedido para cocina. Coordina delivery y calcula tiempos.',
+    painPoints: 'Pedidos mal entendidos. Cocina recibiendo instrucciones confusas. Clientes que preguntan lo mismo mil veces.',
+    copyLanding: 'Un solo flujo para todos los pedidos. Menos errores, menos devoluciones.',
   },
   {
     id: 'feedback',
     icon: Heart,
     title: 'Feedback Agent',
-    description: 'Que vuelvan siempre',
-    fullDescription:
-      'Encuestas post-cena y promos automáticas según tipo de cliente. Convertí clientes ocasionales en clientes frecuentes.',
+    description: 'Que vuelvan (y traigan un amigo)',
+    modalTitle: 'Feedback Agent: Que vuelvan (y traigan un amigo)',
+    whatDoes:
+      'Pide feedback post-visita. Ofrece descuento/promo/beneficio por cumpleaños o para "Traé un amigo". Segmenta por frecuencia/ticket/gustos y envía campañas inteligentes.',
+    painPoints:
+      'Clientes que no vuelven. Base sin segmentar. Promos genéricas que no funcionan.',
+    copyLanding: 'Seguimos la conversación después de la cuenta: promos específicas que funcionan.',
   },
 ];
 
 export default function Gastronomia({ onOpenChat }: GastronomiaProps) {
-  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const scrollToProduct = (id: string) => {
-    setSelectedProduct(id);
-    const element = document.getElementById(`product-${id}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product);
+  };
+
+  const handleModalAction = () => {
+    setSelectedProduct(null);
+    onOpenChat();
   };
 
   return (
@@ -87,13 +107,13 @@ export default function Gastronomia({ onOpenChat }: GastronomiaProps) {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {products.map((product) => {
                 const Icon = product.icon;
                 return (
                   <button
                     key={product.id}
-                    onClick={() => scrollToProduct(product.id)}
+                    onClick={() => handleProductClick(product)}
                     className="group p-8 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl hover:bg-white/20 transition-all duration-300 text-left"
                   >
                     <Icon className="w-12 h-12 text-primary mb-4" />
@@ -109,45 +129,15 @@ export default function Gastronomia({ onOpenChat }: GastronomiaProps) {
         </div>
       </div>
 
-      <div className="bg-white-soft">
-        {products.map((product) => {
-          const Icon = product.icon;
-          return (
-            <div
-              key={product.id}
-              id={`product-${product.id}`}
-              className={`py-20 px-4 ${
-                selectedProduct === product.id ? 'bg-white-accent/30' : ''
-              } transition-colors duration-300`}
-            >
-              <div className="max-w-4xl mx-auto">
-                <div className="flex items-start space-x-6">
-                  <div className="p-4 bg-primary/10 rounded-2xl">
-                    <Icon className="w-16 h-16 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <h2 className="text-4xl font-bold text-black-corp mb-4">
-                      {product.title}
-                    </h2>
-                    <p className="text-xl text-black-corp/80 mb-6">
-                      {product.description}
-                    </p>
-                    <p className="text-lg text-black-corp/70 leading-relaxed">
-                      {product.fullDescription}
-                    </p>
-                    <button
-                      onClick={onOpenChat}
-                      className="mt-8 px-8 py-4 bg-primary hover:bg-primary-dark text-white font-semibold rounded-xl transition-colors duration-300"
-                    >
-                      Quiero saber más
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <ProductModal
+        isOpen={selectedProduct !== null}
+        onClose={() => setSelectedProduct(null)}
+        onAction={handleModalAction}
+        title={selectedProduct?.modalTitle || ''}
+        whatDoes={selectedProduct?.whatDoes || ''}
+        painPoints={selectedProduct?.painPoints || ''}
+        copyLanding={selectedProduct?.copyLanding || ''}
+      />
 
       <Footer onOpenChat={onOpenChat} />
     </div>

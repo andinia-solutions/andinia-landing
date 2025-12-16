@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Inbox, MessageSquare, ClipboardList, BarChart3, X } from 'lucide-react';
+import { Inbox, MessageSquare, ClipboardList, BarChart3, Heart } from 'lucide-react';
 import Footer from '../components/Footer';
+import ProductModal from '../components/ProductModal';
 
 interface ComerciosProps {
   onOpenChat: () => void;
@@ -11,7 +12,11 @@ interface Product {
   icon: React.ElementType;
   title: string;
   description: string;
-  fullDescription: string;
+  modalTitle: string;
+  whatDoes: string;
+  painPoints: string;
+  copyLanding: string;
+  contextualInfo?: string;
 }
 
 const products: Product[] = [
@@ -20,44 +25,85 @@ const products: Product[] = [
     icon: Inbox,
     title: 'Inbox Unificado',
     description: 'Todas tus conversaciones en un solo lugar',
-    fullDescription:
-      'WhatsApp, Instagram y Messenger en una sola pantalla. Chau tener abiertas 5 páginas simultáneas. Gestioná todos tus canales de comunicación desde un único lugar.',
+    modalTitle: 'Inbox Unificado: Todas tus conversaciones en un solo lugar',
+    whatDoes:
+      'Junta WhatsApp, Instagram y Facebook/Messenger en una sola pantalla. Podés etiquetar, buscar clientes, ver historial, marcar "pendientes" y responder sin cambiar de app.',
+    painPoints:
+      'Perder chats, olvidarte de clientes "porque quedó en otra pestaña" o porque se mezcló con mensajes personales.',
+    copyLanding: 'Un sólo lugar donde responder y organizar todos tus mensajes. Chau a estar atentos a cada red.',
+    contextualInfo:
+      'Contexto real: Tienda que trabaja sola y se satura los sábados. Jugueterías y ferreterías que reciben mensajes con fotos y pedidos raros.',
   },
   {
     id: 'auto-responder',
     icon: MessageSquare,
     title: 'Smart Auto-responder',
-    description: 'IA que responde por vos',
-    fullDescription:
-      'Precios, stock y horarios respondidos al instante con tu tono. Si quieren comprar, pasa a un humano. Tu asistente virtual trabaja 24/7.',
+    description: 'IA que responde por vos pero con tu forma de hablar',
+    modalTitle: 'Smart Auto-responder: IA que responde por vos pero con tu forma de hablar',
+    whatDoes:
+      'Responde automáticamente consultas típicas (precio, stock, horario, envío, combos, talles) con lenguaje local ("Sí, tenemos en talle L", "Te queda el envío hoy"). Si detecta intención de compra fuerte, pasa a humano al toque.',
+    painPoints:
+      '80% de mensajes repetidos. Clientes que se te van por tardar en responder. Consultas a las 23:30 = venta perdida.',
+    copyLanding:
+      '¿Cuánto sale? ¿Tenés stock? ¿Hacen envío? Esto y más respondido al instante. Cuando el cliente quiere hablar con vos, lo pasa directo a humano.',
+    contextualInfo:
+      'Tuviste que unir 3 dolores en uno: 80% de mensajes repetidos + Clientes que se van por tardar + Consultas fuera de horario.',
   },
   {
     id: 'order-assistant',
     icon: ClipboardList,
     title: 'Order Assistant',
     description: 'Pedidos bajo control',
-    fullDescription:
-      'La IA arma el resumen, consulta stock y genera el comprobante. Vos solo despachás. Reducí errores y acelerá tu proceso de ventas.',
+    modalTitle: 'Order Assistant: Pedidos bajo control',
+    whatDoes:
+      'Captura pedidos desde WhatsApp/Instagram. Pregunta qué quiere, consulta stock, arma un resumen, genera un comprobante simple y hace seguimiento automático: "¿Pudiste hacer el pago?", "¿Coordinamos la entrega?".',
+    painPoints:
+      'Ventas perdidas por falta de seguimiento. Mensajes mezclados. Clientes que confirman y después nadie les escribe.',
+    copyLanding:
+      'Hacemos resumen del pedido, comprobante y seguimiento. Vos enfocáte en vender, no en perseguir chats.',
+    contextualInfo:
+      'Qué hace realmente: Incluye generar número de orden para retirar en tienda y enviar link de pago.',
   },
   {
     id: 'analytics',
     icon: BarChart3,
     title: 'Micro-Analytics',
-    description: 'Tus números sin Excel',
-    fullDescription:
-      'Detectá horarios pico, los productos más buscados y cuáles te dan problemas. Tomá decisiones basadas en datos reales.',
+    description: 'Los números que importan, sin abrir un Excel',
+    modalTitle: 'Micro-Analytics: Los números que importan, sin abrir un Excel',
+    whatDoes:
+      'Panel web simple con métricas clave (tiempo promedio de respuesta, consultas por producto, horarios pico, dónde se pierden clientes) + un chat tipo "analista de marketing" donde el dueño puede preguntar.',
+    painPoints: 'No tener idea real de qué funciona y qué no. Tomar decisiones "a ojo".',
+    copyLanding: 'Datos que te dicen qué hacer. Sin descifrar hojas, sin fórmulas.',
+    contextualInfo:
+      'Preguntas del Chat Analista: "¿En qué parte se me caen los clientes?", "¿Qué producto me piden pero no tengo stock?", "¿En qué horas me conviene reforzar atención?".',
+  },
+  {
+    id: 'loyalty',
+    icon: Heart,
+    title: 'Post-Sale & Loyalty Agent',
+    description: 'Que vuelvan. Y que recomienden.',
+    modalTitle: 'Post-Sale & Loyalty Agent: Que vuelvan. Y que recomienden.',
+    whatDoes:
+      'Después de la venta, pide feedback real ("¿Cómo te quedó?"). Genera alertas si un cliente quedó disconforme. Arma campañas 1 a 1 y detecta oportunidades de re-compra automáticas.',
+    painPoints:
+      'No hacer seguimiento. No colectar feedback real. No aprovechar la base de clientes. Perder clientes que "nunca más escribieron".',
+    copyLanding:
+      'Seguimos hablando con tus clientes por vos: feedback, ofertas, recordatorios y campañas segmentadas. Todo para que vuelvan… y recomienden.',
+    contextualInfo:
+      'Qué hace: Incluye armar fichas de clientes (Preferencias, Historial, Probabilidad de re-compra) automáticamente.',
   },
 ];
 
 export default function Comercios({ onOpenChat }: ComerciosProps) {
-  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const scrollToProduct = (id: string) => {
-    setSelectedProduct(id);
-    const element = document.getElementById(`product-${id}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product);
+  };
+
+  const handleModalAction = () => {
+    setSelectedProduct(null);
+    onOpenChat();
   };
 
   return (
@@ -87,14 +133,14 @@ export default function Comercios({ onOpenChat }: ComerciosProps) {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {products.map((product) => {
                 const Icon = product.icon;
                 return (
                   <button
                     key={product.id}
-                    onClick={() => scrollToProduct(product.id)}
-                    className="group p-8 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl hover:bg-white/20 transition-all duration-300 text-left"
+                    onClick={() => handleProductClick(product)}
+                    className="group p-8 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl hover:bg-white/20 transition-all duration-300 text-left h-full"
                   >
                     <Icon className="w-12 h-12 text-primary mb-4" />
                     <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
@@ -109,45 +155,16 @@ export default function Comercios({ onOpenChat }: ComerciosProps) {
         </div>
       </div>
 
-      <div className="bg-white-soft">
-        {products.map((product) => {
-          const Icon = product.icon;
-          return (
-            <div
-              key={product.id}
-              id={`product-${product.id}`}
-              className={`py-20 px-4 ${
-                selectedProduct === product.id ? 'bg-white-accent/30' : ''
-              } transition-colors duration-300`}
-            >
-              <div className="max-w-4xl mx-auto">
-                <div className="flex items-start space-x-6">
-                  <div className="p-4 bg-primary/10 rounded-2xl">
-                    <Icon className="w-16 h-16 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <h2 className="text-4xl font-bold text-black-corp mb-4">
-                      {product.title}
-                    </h2>
-                    <p className="text-xl text-black-corp/80 mb-6">
-                      {product.description}
-                    </p>
-                    <p className="text-lg text-black-corp/70 leading-relaxed">
-                      {product.fullDescription}
-                    </p>
-                    <button
-                      onClick={onOpenChat}
-                      className="mt-8 px-8 py-4 bg-primary hover:bg-primary-dark text-white font-semibold rounded-xl transition-colors duration-300"
-                    >
-                      Quiero saber más
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <ProductModal
+        isOpen={selectedProduct !== null}
+        onClose={() => setSelectedProduct(null)}
+        onAction={handleModalAction}
+        title={selectedProduct?.modalTitle || ''}
+        whatDoes={selectedProduct?.whatDoes || ''}
+        painPoints={selectedProduct?.painPoints || ''}
+        copyLanding={selectedProduct?.copyLanding || ''}
+        contextualInfo={selectedProduct?.contextualInfo}
+      />
 
       <Footer onOpenChat={onOpenChat} />
     </div>

@@ -177,16 +177,20 @@ const integrations = [
 export default function Agents({ onOpenChat }: AgentsProps) {
   const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
   const [expandedAgent, setExpandedAgent] = useState<string | null>(null);
+  const [showNextArrow, setShowNextArrow] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const currentAgent = agents[currentAgentIndex];
 
   const nextAgent = () => {
     setCurrentAgentIndex((prev) => (prev + 1) % agents.length);
+    setShowNextArrow(false);
   };
 
   const prevAgent = () => {
     setCurrentAgentIndex((prev) => (prev - 1 + agents.length) % agents.length);
+    setShowNextArrow(false);
   };
 
   useEffect(() => {
@@ -199,133 +203,152 @@ export default function Agents({ onOpenChat }: AgentsProps) {
     return () => clearTimeout(timer);
   }, [expandedAgent]);
 
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (!videoElement) return;
+
+    const handleVideoEnd = () => {
+      setShowNextArrow(true);
+    };
+
+    videoElement.addEventListener('ended', handleVideoEnd);
+    return () => videoElement.removeEventListener('ended', handleVideoEnd);
+  }, []);
+
   const Icon = currentAgent.icon;
 
   return (
     <div className="min-h-screen bg-white-soft">
-      <div className="pt-24 pb-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-bold text-black-corp mb-6">
-              AndinIA Agents™
-            </h1>
-            <p className="text-xl text-black-corp/70 max-w-3xl mx-auto">
-              Tus empleados virtuales de élite. Cada agente especializado en automatizar lo que importa.
-            </p>
-          </div>
-
-          <div className="bg-gradient-to-br from-primary-dark to-primary/20 rounded-3xl p-12 mb-16">
-            <div className="flex items-start space-x-8">
-              <div className="p-8 bg-white rounded-2xl">
-                <Icon className="w-16 h-16 text-primary" />
+      <div className="pt-32 pb-12 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="relative h-[90vh] bg-gradient-to-br from-primary-dark to-primary/20 rounded-3xl overflow-hidden shadow-2xl">
+            <div className="absolute inset-0 bg-black/20">
+              <div className="absolute top-0 left-0 right-0 h-[10%] bg-gradient-to-b from-black/40 to-transparent flex items-center px-8">
+                <div>
+                  <h2 className="text-3xl font-bold text-white">{currentAgent.name}</h2>
+                  <p className="text-white-soft">{currentAgent.role}</p>
+                </div>
               </div>
 
-              <div className="flex-1 text-white">
-                <div className="flex items-baseline space-x-4 mb-4">
-                  <h2 className="text-5xl font-bold">{currentAgent.name}</h2>
-                  <p className="text-xl text-white-soft">{currentAgent.role}</p>
-                </div>
+              <video
+                ref={videoRef}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-[90%] h-[60%] object-cover mx-auto mt-[12%]"
+              >
+                <source
+                  src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                  type="video/mp4"
+                />
+              </video>
 
-                <p className="text-2xl font-semibold mb-6 text-white-soft">
-                  "{currentAgent.pitch}"
-                </p>
+              <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-gradient-to-t from-black/60 to-transparent flex items-center justify-between px-8">
+                <div className="flex-1">
+                  <p className="text-white text-lg font-semibold mb-3">
+                    {currentAgent.pitch}
+                  </p>
+                  <button
+                    onClick={() => setExpandedAgent(expandedAgent === currentAgent.id ? null : currentAgent.id)}
+                    className="px-6 py-2 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-colors"
+                  >
+                    Ver capacidades completas
+                  </button>
+                </div>
 
                 <button
-                  onClick={() => setExpandedAgent(expandedAgent === currentAgent.id ? null : currentAgent.id)}
-                  className="px-8 py-3 bg-white text-primary hover:bg-white-soft font-semibold rounded-xl transition-colors"
-                >
-                  {expandedAgent === currentAgent.id ? 'Ver menos detalles' : 'Ver capacidades completas'}
-                </button>
-              </div>
-            </div>
-
-            {expandedAgent === currentAgent.id && (
-              <div id="agent-details" className="mt-8 pt-8 border-t border-white/20 space-y-8">
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-4">Qué hace (en serio)</h3>
-                  <p className="text-white-soft text-lg leading-relaxed">{currentAgent.whatDoesItDo}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-4">Problemas que ataca</h3>
-                  <ul className="space-y-3">
-                    {currentAgent.problemsSolved.map((problem, idx) => (
-                      <li key={idx} className="flex items-start space-x-3">
-                        <span className="text-primary text-2xl mt-1">•</span>
-                        <span className="text-white-soft text-lg">{problem}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-4">Cómo se integra</h3>
-                  <p className="text-white-soft text-lg leading-relaxed">{currentAgent.integration}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-4">Módulos de servicio</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {currentAgent.modules.map((module, idx) => (
-                      <div key={idx} className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                        <h4 className="font-semibold text-white mb-2">{module.title}</h4>
-                        <p className="text-white-soft text-sm">{module.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="bg-primary/20 rounded-xl p-4 border border-white/20">
-                  <p className="text-white italic">"{currentAgent.cta}"</p>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex space-x-2">
-              {agents.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentAgentIndex(idx)}
-                  className={`w-12 h-12 rounded-full font-semibold transition-all ${
-                    idx === currentAgentIndex
-                      ? 'bg-primary text-white'
-                      : 'bg-white border-2 border-white-accent text-black-corp hover:border-primary'
+                  onClick={nextAgent}
+                  className={`ml-6 transition-all duration-300 ${
+                    showNextArrow
+                      ? 'flex flex-col items-center space-y-2 group'
+                      : 'p-3'
                   }`}
+                  onMouseEnter={() => setShowNextArrow(true)}
+                  onMouseLeave={() => setShowNextArrow(false)}
                 >
-                  {agents[idx].name}
+                  {showNextArrow ? (
+                    <>
+                      <ChevronRight className="w-8 h-8 text-primary group-hover:w-12 group-hover:h-12 transition-all" />
+                      <span className="text-primary text-sm font-semibold whitespace-nowrap">
+                        Conocé a {agents[(currentAgentIndex + 1) % agents.length].name}
+                      </span>
+                    </>
+                  ) : (
+                    <ChevronRight className="w-6 h-6 text-primary" />
+                  )}
                 </button>
-              ))}
-            </div>
-
-            <div className="flex space-x-4">
-              <button
-                onClick={prevAgent}
-                className="p-3 bg-white border-2 border-white-accent hover:border-primary rounded-full transition-colors"
-              >
-                <ChevronLeft className="w-6 h-6 text-primary" />
-              </button>
-              <button
-                onClick={nextAgent}
-                className="p-3 bg-primary hover:bg-primary-dark text-white rounded-full transition-colors"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
+              </div>
             </div>
           </div>
 
-          <button
-            onClick={onOpenChat}
-            className="w-full py-6 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white font-bold text-xl rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            Contratar AndinIA Agents™
-          </button>
+          <div className="flex justify-center mt-8 space-x-3">
+            {agents.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentAgentIndex(idx)}
+                className={`w-3 h-3 rounded-full transition-all ${
+                  idx === currentAgentIndex ? 'bg-primary w-8' : 'bg-white-accent hover:bg-primary'
+                }`}
+              />
+            ))}
+          </div>
+
+          {expandedAgent === currentAgent.id && (
+            <div id="agent-details" className="mt-12 bg-gradient-to-br from-primary-dark to-primary/20 rounded-2xl p-8 space-y-8">
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-4">Qué hace (en serio)</h3>
+                <p className="text-white-soft text-lg leading-relaxed">{currentAgent.whatDoesItDo}</p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-4">Problemas que ataca</h3>
+                <ul className="space-y-3">
+                  {currentAgent.problemsSolved.map((problem, idx) => (
+                    <li key={idx} className="flex items-start space-x-3">
+                      <span className="text-primary text-2xl mt-1">•</span>
+                      <span className="text-white-soft text-lg">{problem}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-4">Cómo se integra</h3>
+                <p className="text-white-soft text-lg leading-relaxed">{currentAgent.integration}</p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-4">Módulos de servicio</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {currentAgent.modules.map((module, idx) => (
+                    <div key={idx} className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                      <h4 className="font-semibold text-white mb-2">{module.title}</h4>
+                      <p className="text-white-soft text-sm">{module.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={onOpenChat}
+                className="w-full py-4 bg-white text-primary hover:bg-white-soft font-bold text-lg rounded-xl transition-colors"
+              >
+                Quiero contratar a {currentAgent.name}
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="bg-primary-dark text-white py-20 px-4">
-        <div className="max-w-7xl mx-auto">
+      <div className="relative py-20 px-4 text-white">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url(/fondo-index.jpg)' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/85 via-primary-dark/75 to-primary/70 backdrop-blur-sm" />
+
+        <div className="relative z-10 max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold mb-6 text-center">
             Integraciones Personalizadas
           </h2>

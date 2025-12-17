@@ -180,109 +180,106 @@ export default function Agents({ onOpenChat }: AgentsProps) {
   const [showNextArrow, setShowNextArrow] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const arrowTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const currentAgent = agents[currentAgentIndex];
 
   const nextAgent = () => {
     setCurrentAgentIndex((prev) => (prev + 1) % agents.length);
     setShowNextArrow(false);
+    if (arrowTimeoutRef.current) clearTimeout(arrowTimeoutRef.current);
   };
 
   const prevAgent = () => {
     setCurrentAgentIndex((prev) => (prev - 1 + agents.length) % agents.length);
     setShowNextArrow(false);
+    if (arrowTimeoutRef.current) clearTimeout(arrowTimeoutRef.current);
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (expandedAgent) {
-        const element = document.getElementById('agent-details');
-        element?.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [expandedAgent]);
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      if (arrowTimeoutRef.current) clearTimeout(arrowTimeoutRef.current);
+      setShowNextArrow(false);
 
-  useEffect(() => {
-    const videoElement = videoRef.current;
-    if (!videoElement) return;
+      arrowTimeoutRef.current = setTimeout(() => {
+        setShowNextArrow(true);
+      }, 55000);
+    }
 
-    const handleVideoEnd = () => {
-      setShowNextArrow(true);
+    return () => {
+      if (arrowTimeoutRef.current) clearTimeout(arrowTimeoutRef.current);
     };
-
-    videoElement.addEventListener('ended', handleVideoEnd);
-    return () => videoElement.removeEventListener('ended', handleVideoEnd);
-  }, []);
+  }, [currentAgentIndex]);
 
   const Icon = currentAgent.icon;
 
   return (
     <div className="min-h-screen bg-white-soft">
-      <div className="pt-32 pb-12 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="relative h-[90vh] bg-gradient-to-br from-primary-dark to-primary/20 rounded-3xl overflow-hidden shadow-2xl">
+      <div className="min-h-[calc(100vh-5rem)] flex flex-col justify-center pt-20 pb-8 px-4">
+        <div className="max-w-7xl mx-auto w-full">
+          <div className="relative w-full h-[calc(100vh-10rem)] bg-gradient-to-br from-primary-dark to-primary/20 rounded-3xl overflow-hidden shadow-2xl">
             <div className="absolute inset-0 bg-black/20">
-              <div className="absolute top-0 left-0 right-0 h-[10%] bg-gradient-to-b from-black/40 to-transparent flex items-center px-8">
+              <div className="absolute top-0 left-0 right-0 h-[8%] bg-gradient-to-b from-black/40 to-transparent flex items-center px-8 z-10">
                 <div>
-                  <h2 className="text-3xl font-bold text-white">{currentAgent.name}</h2>
-                  <p className="text-white-soft">{currentAgent.role}</p>
+                  <h2 className="text-4xl font-bold text-white">{currentAgent.name}</h2>
+                  <p className="text-white-soft text-lg">{currentAgent.role}</p>
                 </div>
               </div>
 
-              <video
-                ref={videoRef}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-[90%] h-[60%] object-cover mx-auto mt-[12%]"
-              >
-                <source
-                  src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                  type="video/mp4"
-                />
-              </video>
+              <div className="absolute inset-0 flex items-center justify-center pt-12">
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-[75%] h-[70%] object-cover rounded-2xl"
+                >
+                  <source
+                    src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                    type="video/mp4"
+                  />
+                </video>
+              </div>
 
-              <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-gradient-to-t from-black/60 to-transparent flex items-center justify-between px-8">
+              <div className="absolute bottom-0 left-0 right-0 h-[22%] bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-between px-8 z-20">
                 <div className="flex-1">
-                  <p className="text-white text-lg font-semibold mb-3">
+                  <p className="text-white text-xl font-semibold mb-4">
                     {currentAgent.pitch}
                   </p>
                   <button
                     onClick={() => setExpandedAgent(expandedAgent === currentAgent.id ? null : currentAgent.id)}
-                    className="px-6 py-2 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-colors"
+                    className="px-8 py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg transition-all duration-300 shadow-lg"
                   >
                     Ver capacidades completas
                   </button>
                 </div>
-
-                <button
-                  onClick={nextAgent}
-                  className={`ml-6 transition-all duration-300 ${
-                    showNextArrow
-                      ? 'flex flex-col items-center space-y-2 group'
-                      : 'p-3'
-                  }`}
-                  onMouseEnter={() => setShowNextArrow(true)}
-                  onMouseLeave={() => setShowNextArrow(false)}
-                >
-                  {showNextArrow ? (
-                    <>
-                      <ChevronRight className="w-8 h-8 text-primary group-hover:w-12 group-hover:h-12 transition-all" />
-                      <span className="text-primary text-sm font-semibold whitespace-nowrap">
-                        Conocé a {agents[(currentAgentIndex + 1) % agents.length].name}
-                      </span>
-                    </>
-                  ) : (
-                    <ChevronRight className="w-6 h-6 text-primary" />
-                  )}
-                </button>
               </div>
+
+              <button
+                onClick={nextAgent}
+                className={`absolute right-8 bottom-1/2 transform translate-y-1/2 z-30 transition-all duration-500 flex flex-col items-center ${
+                  showNextArrow
+                    ? 'opacity-100 scale-125'
+                    : 'opacity-60 scale-100 hover:opacity-100 hover:scale-110'
+                }`}
+                onMouseEnter={() => setShowNextArrow(true)}
+                onMouseLeave={() => !showNextArrow && setShowNextArrow(false)}
+              >
+                <ChevronRight className={`text-primary transition-all duration-300 ${
+                  showNextArrow ? 'w-16 h-16' : 'w-8 h-8'
+                }`} />
+                {showNextArrow && (
+                  <span className="text-primary text-lg font-bold mt-3 whitespace-nowrap animate-pulse">
+                    Conocé a {agents[(currentAgentIndex + 1) % agents.length].name}
+                  </span>
+                )}
+              </button>
             </div>
           </div>
 
-          <div className="flex justify-center mt-8 space-x-3">
+          <div className="flex justify-center mt-6 space-x-3">
             {agents.map((_, idx) => (
               <button
                 key={idx}
@@ -293,9 +290,26 @@ export default function Agents({ onOpenChat }: AgentsProps) {
               />
             ))}
           </div>
+        </div>
+      </div>
 
-          {expandedAgent === currentAgent.id && (
-            <div id="agent-details" className="mt-12 bg-gradient-to-br from-primary-dark to-primary/20 rounded-2xl p-8 space-y-8">
+      {expandedAgent === currentAgent.id && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gradient-to-br from-primary-dark to-primary/20 rounded-3xl p-8 max-w-3xl max-h-[90vh] overflow-y-auto w-full">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-4xl font-bold text-white">{currentAgent.name}</h2>
+                <p className="text-white-soft text-lg">{currentAgent.role}</p>
+              </div>
+              <button
+                onClick={() => setExpandedAgent(null)}
+                className="text-white hover:text-primary transition-colors"
+              >
+                <ChevronRight className="w-8 h-8 rotate-90" />
+              </button>
+            </div>
+
+            <div className="space-y-8">
               <div>
                 <h3 className="text-2xl font-bold text-white mb-4">Qué hace (en serio)</h3>
                 <p className="text-white-soft text-lg leading-relaxed">{currentAgent.whatDoesItDo}</p>
@@ -332,14 +346,14 @@ export default function Agents({ onOpenChat }: AgentsProps) {
 
               <button
                 onClick={onOpenChat}
-                className="w-full py-4 bg-white text-primary hover:bg-white-soft font-bold text-lg rounded-xl transition-colors"
+                className="w-full py-4 bg-white text-primary hover:bg-white-soft font-bold text-xl rounded-xl transition-all duration-300 shadow-lg"
               >
                 Quiero contratar a {currentAgent.name}
               </button>
             </div>
-          )}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="relative py-20 px-4 text-white">
         <div

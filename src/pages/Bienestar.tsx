@@ -2,10 +2,7 @@ import { useState } from 'react';
 import { CalendarCheck, Bell, FileText, RotateCcw, Calendar, BarChart3 } from 'lucide-react';
 import Footer from '../components/Footer';
 import ProductModal from '../components/ProductModal';
-
-interface BienestarProps {
-  onOpenChat: () => void;
-}
+import { useChat } from '../context/ChatContext';
 
 interface Product {
   id: string;
@@ -104,8 +101,9 @@ const products: Product[] = [
   },
 ];
 
-export default function Bienestar({ onOpenChat }: BienestarProps) {
+export default function Bienestar() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const { openChat } = useChat();
 
   const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
@@ -113,7 +111,7 @@ export default function Bienestar({ onOpenChat }: BienestarProps) {
 
   const handleModalAction = () => {
     setSelectedProduct(null);
-    onOpenChat();
+    openChat();
   };
 
   return (
@@ -176,7 +174,7 @@ export default function Bienestar({ onOpenChat }: BienestarProps) {
         contextualInfo={selectedProduct?.contextualInfo}
       />
 
-      <Footer onOpenChat={onOpenChat} />
+      <Footer />
     </div>
   );
 }

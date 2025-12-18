@@ -2,10 +2,7 @@ import { useState } from 'react';
 import { Inbox, MessageSquare, ClipboardList, BarChart3, Heart } from 'lucide-react';
 import Footer from '../components/Footer';
 import ProductModal from '../components/ProductModal';
-
-interface ComerciosProps {
-  onOpenChat: () => void;
-}
+import { useChat } from '../context/ChatContext';
 
 interface Product {
   id: string;
@@ -94,8 +91,9 @@ const products: Product[] = [
   },
 ];
 
-export default function Comercios({ onOpenChat }: ComerciosProps) {
+export default function Comercios() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const { openChat } = useChat();
 
   const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
@@ -103,7 +101,7 @@ export default function Comercios({ onOpenChat }: ComerciosProps) {
 
   const handleModalAction = () => {
     setSelectedProduct(null);
-    onOpenChat();
+    openChat();
   };
 
   return (
@@ -166,7 +164,7 @@ export default function Comercios({ onOpenChat }: ComerciosProps) {
         contextualInfo={selectedProduct?.contextualInfo}
       />
 
-      <Footer onOpenChat={onOpenChat} />
+      <Footer />
     </div>
   );
 }

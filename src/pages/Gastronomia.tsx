@@ -2,10 +2,7 @@ import { useState } from 'react';
 import { Phone, Calendar, ShoppingBag, Heart } from 'lucide-react';
 import Footer from '../components/Footer';
 import ProductModal from '../components/ProductModal';
-
-interface GastronomiaProps {
-  onOpenChat: () => void;
-}
+import { useChat } from '../context/ChatContext';
 
 interface Product {
   id: string;
@@ -68,8 +65,9 @@ const products: Product[] = [
   },
 ];
 
-export default function Gastronomia({ onOpenChat }: GastronomiaProps) {
+export default function Gastronomia() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const { openChat } = useChat();
 
   const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
@@ -77,7 +75,7 @@ export default function Gastronomia({ onOpenChat }: GastronomiaProps) {
 
   const handleModalAction = () => {
     setSelectedProduct(null);
-    onOpenChat();
+    openChat();
   };
 
   return (
@@ -139,7 +137,7 @@ export default function Gastronomia({ onOpenChat }: GastronomiaProps) {
         copyLanding={selectedProduct?.copyLanding || ''}
       />
 
-      <Footer onOpenChat={onOpenChat} />
+      <Footer />
     </div>
   );
 }

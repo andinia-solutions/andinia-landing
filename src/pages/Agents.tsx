@@ -1,10 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
-import { ChevronRight, ChevronLeft, Zap, MessageSquare, BarChart3, Headset } from 'lucide-react';
+import { ChevronRight, Zap, MessageSquare, BarChart3, Headset } from 'lucide-react';
 import Footer from '../components/Footer';
-
-interface AgentsProps {
-  onOpenChat: () => void;
-}
+import { useChat } from '../context/ChatContext';
 
 interface Agent {
   id: string;
@@ -174,24 +171,18 @@ const integrations = [
   'Plataformas de e-commerce y tickets',
 ];
 
-export default function Agents({ onOpenChat }: AgentsProps) {
+export default function Agents() {
   const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
   const [expandedAgent, setExpandedAgent] = useState<string | null>(null);
   const [showNextArrow, setShowNextArrow] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const arrowTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { openChat } = useChat();
 
   const currentAgent = agents[currentAgentIndex];
 
   const nextAgent = () => {
     setCurrentAgentIndex((prev) => (prev + 1) % agents.length);
-    setShowNextArrow(false);
-    if (arrowTimeoutRef.current) clearTimeout(arrowTimeoutRef.current);
-  };
-
-  const prevAgent = () => {
-    setCurrentAgentIndex((prev) => (prev - 1 + agents.length) % agents.length);
     setShowNextArrow(false);
     if (arrowTimeoutRef.current) clearTimeout(arrowTimeoutRef.current);
   };
@@ -211,8 +202,6 @@ export default function Agents({ onOpenChat }: AgentsProps) {
       if (arrowTimeoutRef.current) clearTimeout(arrowTimeoutRef.current);
     };
   }, [currentAgentIndex]);
-
-  const Icon = currentAgent.icon;
 
   return (
     <div className="min-h-screen bg-white-soft">
@@ -345,7 +334,7 @@ export default function Agents({ onOpenChat }: AgentsProps) {
               </div>
 
               <button
-                onClick={onOpenChat}
+                onClick={openChat}
                 className="w-full py-4 bg-white text-primary hover:bg-white-soft font-bold text-xl rounded-xl transition-all duration-300 shadow-lg"
               >
                 Quiero contratar a {currentAgent.name}
@@ -388,7 +377,7 @@ export default function Agents({ onOpenChat }: AgentsProps) {
               Si tu empresa tiene un sistema, nosotros lo hacemos hablar con nuestros agentes.
             </p>
             <button
-              onClick={onOpenChat}
+              onClick={openChat}
               className="px-8 py-4 bg-white text-primary hover:bg-white-soft font-semibold rounded-xl transition-colors"
             >
               Contanos sobre tu infraestructura
@@ -397,7 +386,7 @@ export default function Agents({ onOpenChat }: AgentsProps) {
         </div>
       </div>
 
-      <Footer onOpenChat={onOpenChat} />
+      <Footer />
     </div>
   );
 }

@@ -2,15 +2,13 @@ import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Store, Utensils, Heart, Volume2, VolumeX, ArrowRight } from 'lucide-react';
 import Footer from '../components/Footer';
+import { useChat } from '../context/ChatContext';
 
-interface HomeProps {
-  onOpenChat: () => void;
-}
-
-export default function Home({ onOpenChat }: HomeProps) {
+export default function Home() {
   const [isMuted, setIsMuted] = useState(true);
   const [showFooter, setShowFooter] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const { openChat } = useChat();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -126,7 +124,7 @@ export default function Home({ onOpenChat }: HomeProps) {
                 </p>
 
                 <button
-                  onClick={onOpenChat}
+                  onClick={openChat}
                   className="w-full px-6 py-3 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white font-bold text-sm rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl mb-3"
                 >
                   Chateá con nuestra Agente de Ventas y descubrí qué podemos hacer por vos
@@ -175,7 +173,7 @@ export default function Home({ onOpenChat }: HomeProps) {
 
       {showFooter && (
         <div className="relative z-10 animate-fade-in">
-          <Footer onOpenChat={onOpenChat} />
+          <Footer />
         </div>
       )}
     </div>

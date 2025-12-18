@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useChat } from '../context/ChatContext';
 
-interface FooterProps {
-  onOpenChat: () => void;
-}
+export default function Footer() {
+  const { openChat } = useChat();
 
-export default function Footer({ onOpenChat }: FooterProps) {
   return (
     <footer className="bg-primary-dark text-white-soft">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -66,7 +65,7 @@ export default function Footer({ onOpenChat }: FooterProps) {
               </li>
               <li>
                 <button
-                  onClick={onOpenChat}
+                  onClick={openChat}
                   className="hover:text-primary transition-colors text-left"
                 >
                   Agendá tu Reunión

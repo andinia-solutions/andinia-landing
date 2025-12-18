@@ -1,14 +1,12 @@
 import { MapPin, Target, Users, Lightbulb, Volume2, VolumeX } from 'lucide-react';
 import { useState, useRef } from 'react';
 import Footer from '../components/Footer';
+import { useChat } from '../context/ChatContext';
 
-interface AboutProps {
-  onOpenChat: () => void;
-}
-
-export default function About({ onOpenChat }: AboutProps) {
+export default function About() {
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const { openChat } = useChat();
 
   const handleUnmute = () => {
     if (videoRef.current) {
@@ -156,7 +154,7 @@ export default function About({ onOpenChat }: AboutProps) {
               hablar de casos de uso y soluciones personalizadas.
             </p>
             <button
-              onClick={onOpenChat}
+              onClick={openChat}
               className="px-8 py-4 bg-white text-primary hover:bg-white-soft font-semibold rounded-xl transition-colors duration-300"
             >
               Agendar una Reunión
@@ -165,7 +163,7 @@ export default function About({ onOpenChat }: AboutProps) {
         </div>
       </div>
 
-      <Footer onOpenChat={onOpenChat} />
+      <Footer />
     </div>
   );
 }

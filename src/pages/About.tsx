@@ -1,4 +1,4 @@
-import { MapPin, Target, Users, Lightbulb, Volume2, VolumeX } from 'lucide-react';
+import { MapPin, Target, Users, Lightbulb, Volume2, VolumeX, ChevronDown } from 'lucide-react';
 import { useState, useRef } from 'react';
 import Footer from '../components/Footer';
 import { useChat } from '../context/ChatContext';
@@ -25,20 +25,18 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-white-soft">
-      <div className="pt-24 pb-16 px-4">
+      <div className="pt-28 pb-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-bold text-black-corp mb-6">
-              ¿Quiénes Somos?
+          {/* Título compacto encima del video */}
+          <div className="mb-6 flex flex-col items-center">
+            <h1 className="text-base md:text-lg lg:text-xl font-bold text-primary text-center px-4">
+              Somos un equipo pensado para integrar IA donde sea, lo que necesitás para no quedarte afuera
             </h1>
-            <p className="text-xl text-black-corp/70 max-w-3xl mx-auto">
-              Somos AndinIA, nacidos en Neuquén para el mundo. No somos solo una consultora, somos integradores de
-              Inteligencia Artificial.
-            </p>
+            <div className="mt-2 h-0.5 bg-gradient-to-r from-primary via-primary-dark to-primary rounded-full shadow-md" style={{ width: 'calc(100% - 2rem)', maxWidth: 'fit-content' }}></div>
           </div>
 
           <div className="mb-16">
-            <div className="relative aspect-video bg-black-corp rounded-3xl overflow-hidden shadow-2xl mb-8">
+            <div className="relative aspect-video bg-black-corp rounded-3xl overflow-hidden shadow-2xl mb-8 max-w-5xl mx-auto">
               <video
                 ref={videoRef}
                 autoPlay
@@ -62,6 +60,14 @@ export default function About() {
                   <Volume2 className="w-6 h-6 text-primary" />
                 )}
               </button>
+            </div>
+
+            {/* Indicador de scroll hacia abajo */}
+            <div className="h-[7vh] flex flex-col items-center justify-center gap-2 px-4 mb-8">
+              <p className="text-black-corp/90 text-sm md:text-base font-medium">
+                Conocenos más
+              </p>
+              <ChevronDown className="w-6 h-6 text-primary animate-bounce" />
             </div>
 
             <div className="bg-gradient-to-r from-primary to-primary-dark rounded-2xl p-8 text-white">

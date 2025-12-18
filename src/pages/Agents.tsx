@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ChevronRight, Zap, MessageSquare, BarChart3, Headset } from 'lucide-react';
+import { ChevronRight, Zap, MessageSquare, BarChart3, Headset, ChevronDown } from 'lucide-react';
 import Footer from '../components/Footer';
 import { useChat } from '../context/ChatContext';
 
@@ -174,7 +174,6 @@ const integrations = [
 export default function Agents() {
   const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
   const [expandedAgent, setExpandedAgent] = useState<string | null>(null);
-  const [showNextArrow, setShowNextArrow] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const arrowTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { openChat } = useChat();
@@ -183,151 +182,150 @@ export default function Agents() {
 
   const nextAgent = () => {
     setCurrentAgentIndex((prev) => (prev + 1) % agents.length);
-    setShowNextArrow(false);
+    // setShowNextArrow(false);
     if (arrowTimeoutRef.current) clearTimeout(arrowTimeoutRef.current);
   };
 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
-      if (arrowTimeoutRef.current) clearTimeout(arrowTimeoutRef.current);
-      setShowNextArrow(false);
-
-      arrowTimeoutRef.current = setTimeout(() => {
-        setShowNextArrow(true);
-      }, 55000);
     }
-
-    return () => {
-      if (arrowTimeoutRef.current) clearTimeout(arrowTimeoutRef.current);
-    };
   }, [currentAgentIndex]);
 
   return (
-    <div className="min-h-screen bg-white-soft">
-      <div className="min-h-[calc(100vh-5rem)] flex flex-col justify-center pt-20 pb-8 px-4">
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="relative w-full h-[calc(100vh-10rem)] bg-gradient-to-br from-primary-dark to-primary/20 rounded-3xl overflow-hidden shadow-2xl">
-            <div className="absolute inset-0 bg-black/20">
-              <div className="absolute top-0 left-0 right-0 h-[8%] bg-gradient-to-b from-black/40 to-transparent flex items-center px-8 z-10">
-                <div>
-                  <h2 className="text-4xl font-bold text-white">{currentAgent.name}</h2>
-                  <p className="text-white-soft text-lg">{currentAgent.role}</p>
-                </div>
-              </div>
+    <div className="min-h-screen bg-black-corp relative overflow-hidden">
+      <div className="relative min-h-screen flex flex-col">
+        {/* Video de fondo a pantalla completa */}
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source
+            src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            type="video/mp4"
+          />
+        </video>
+        
+        {/* Overlay sutil solo para contraste de texto */}
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/60 via-primary-dark/70 to-primary-dark/80" />
 
-              <div className="absolute inset-0 flex items-center justify-center pt-12">
-                <video
-                  ref={videoRef}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-[75%] h-[70%] object-cover rounded-2xl"
-                >
-                  <source
-                    src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                    type="video/mp4"
-                  />
-                </video>
-              </div>
-
-              <div className="absolute bottom-0 left-0 right-0 h-[22%] bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-between px-8 z-20">
-                <div className="flex-1">
-                  <p className="text-white text-xl font-semibold mb-4">
-                    {currentAgent.pitch}
-                  </p>
-                  <button
-                    onClick={() => setExpandedAgent(expandedAgent === currentAgent.id ? null : currentAgent.id)}
-                    className="px-8 py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg transition-all duration-300 shadow-lg"
-                  >
-                    Ver capacidades completas
-                  </button>
-                </div>
-              </div>
-
-              <button
-                onClick={nextAgent}
-                className={`absolute right-8 bottom-1/2 transform translate-y-1/2 z-30 transition-all duration-500 flex flex-col items-center ${
-                  showNextArrow
-                    ? 'opacity-100 scale-125'
-                    : 'opacity-60 scale-100 hover:opacity-100 hover:scale-110'
-                }`}
-                onMouseEnter={() => setShowNextArrow(true)}
-                onMouseLeave={() => !showNextArrow && setShowNextArrow(false)}
-              >
-                <ChevronRight className={`text-primary transition-all duration-300 ${
-                  showNextArrow ? 'w-16 h-16' : 'w-8 h-8'
-                }`} />
-                {showNextArrow && (
-                  <span className="text-primary text-lg font-bold mt-3 whitespace-nowrap animate-pulse">
-                    Conocé a {agents[(currentAgentIndex + 1) % agents.length].name}
-                  </span>
-                )}
-              </button>
+        <div className="relative z-10 flex-1 flex flex-col justify-end pt-24 pb-4 px-4">
+          {/* Header con nombre y rol en la misma línea */}
+          <div className="text-center mb-auto mt-8">
+            <div className="flex items-center justify-center gap-3 flex-wrap">
+              <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg">
+                {currentAgent.name}
+              </h1>
+              <span className="text-white/80 text-lg md:text-xl drop-shadow-md">
+                {currentAgent.role}
+              </span>
             </div>
           </div>
 
-          <div className="flex justify-center mt-6 space-x-3">
-            {agents.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentAgentIndex(idx)}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  idx === currentAgentIndex ? 'bg-primary w-8' : 'bg-white-accent hover:bg-primary'
-                }`}
-              />
-            ))}
+          {/* Navegación entre agentes */}
+          <div className="flex justify-center items-center gap-4 mb-4">
+            <button
+              onClick={() => setCurrentAgentIndex((prev) => (prev - 1 + agents.length) % agents.length)}
+              className="p-2 bg-white/20 backdrop-blur-md rounded-full border-2 border-white/30 hover:bg-white/30 transition-all duration-300"
+            >
+              <ChevronRight className="w-6 h-6 text-white rotate-180 drop-shadow-lg" />
+            </button>
+            
+            <div className="flex space-x-2">
+              {agents.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentAgentIndex(idx)}
+                  className={`rounded-full transition-all duration-300 ${
+                    idx === currentAgentIndex 
+                      ? 'bg-primary w-10 h-3 shadow-lg' 
+                      : 'bg-white/40 hover:bg-white/60 w-3 h-3'
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={nextAgent}
+              className="p-2 bg-white/20 backdrop-blur-md rounded-full border-2 border-white/30 hover:bg-white/30 transition-all duration-300"
+            >
+              <ChevronRight className="w-6 h-6 text-white drop-shadow-lg" />
+            </button>
+          </div>
+
+          {/* Pitch y botón abajo de la navegación */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 px-4 mb-4">
+            <p className="text-white text-xl md:text-2xl font-semibold drop-shadow-lg flex-1 text-center md:text-left leading-relaxed line-clamp-2">
+              {currentAgent.pitch}
+            </p>
+            <button
+              onClick={() => setExpandedAgent(expandedAgent === currentAgent.id ? null : currentAgent.id)}
+              className="px-8 py-4 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white font-bold rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl whitespace-nowrap"
+            >
+              Ver capacidades completas
+            </button>
+          </div>
+
+          {/* Indicador de scroll hacia abajo */}
+          <div className="h-[7vh] flex flex-col items-center justify-center gap-2 px-4 pb-2">
+            <p className="text-white/90 text-sm md:text-base font-medium drop-shadow-md">
+              ¿Cómo nos integramos con tus sistemas?
+            </p>
+            <ChevronDown className="w-6 h-6 text-white/80 animate-bounce drop-shadow-md" />
           </div>
         </div>
       </div>
 
       {expandedAgent === currentAgent.id && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-gradient-to-br from-primary-dark to-primary/20 rounded-3xl p-8 max-w-3xl max-h-[90vh] overflow-y-auto w-full">
-            <div className="flex items-center justify-between mb-8">
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="bg-gradient-to-br from-primary-dark to-primary/30 rounded-3xl p-8 max-w-3xl max-h-[90vh] overflow-y-auto w-full border-2 border-white/20 shadow-2xl">
+            <div className="flex items-center justify-between mb-8 pb-6 border-b border-white/20">
               <div>
-                <h2 className="text-4xl font-bold text-white">{currentAgent.name}</h2>
-                <p className="text-white-soft text-lg">{currentAgent.role}</p>
+                <h2 className="text-4xl font-bold text-white drop-shadow-lg">{currentAgent.name}</h2>
+                <p className="text-white drop-shadow-md text-lg mt-1">{currentAgent.role}</p>
               </div>
               <button
                 onClick={() => setExpandedAgent(null)}
-                className="text-white hover:text-primary transition-colors"
+                className="p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors backdrop-blur-sm"
               >
-                <ChevronRight className="w-8 h-8 rotate-90" />
+                <ChevronRight className="w-6 h-6 text-white rotate-90" />
               </button>
             </div>
 
             <div className="space-y-8">
               <div>
-                <h3 className="text-2xl font-bold text-white mb-4">Qué hace (en serio)</h3>
-                <p className="text-white-soft text-lg leading-relaxed">{currentAgent.whatDoesItDo}</p>
+                <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-md">Qué hace (en serio)</h3>
+                <p className="text-white/95 text-lg leading-relaxed drop-shadow-sm">{currentAgent.whatDoesItDo}</p>
               </div>
 
               <div>
-                <h3 className="text-2xl font-bold text-white mb-4">Problemas que ataca</h3>
+                <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-md">Problemas que ataca</h3>
                 <ul className="space-y-3">
                   {currentAgent.problemsSolved.map((problem, idx) => (
                     <li key={idx} className="flex items-start space-x-3">
-                      <span className="text-primary text-2xl mt-1">•</span>
-                      <span className="text-white-soft text-lg">{problem}</span>
+                      <span className="text-white-accent text-2xl mt-1 drop-shadow-md">•</span>
+                      <span className="text-white/95 text-lg drop-shadow-sm">{problem}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
               <div>
-                <h3 className="text-2xl font-bold text-white mb-4">Cómo se integra</h3>
-                <p className="text-white-soft text-lg leading-relaxed">{currentAgent.integration}</p>
+                <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-md">Cómo se integra</h3>
+                <p className="text-white/95 text-lg leading-relaxed drop-shadow-sm">{currentAgent.integration}</p>
               </div>
 
               <div>
-                <h3 className="text-2xl font-bold text-white mb-4">Módulos de servicio</h3>
+                <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-md">Módulos de servicio</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {currentAgent.modules.map((module, idx) => (
-                    <div key={idx} className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                      <h4 className="font-semibold text-white mb-2">{module.title}</h4>
-                      <p className="text-white-soft text-sm">{module.description}</p>
+                    <div key={idx} className="bg-white/20 backdrop-blur-md rounded-xl p-5 border border-white/30 shadow-lg">
+                      <h4 className="font-bold text-white mb-2 drop-shadow-md">{module.title}</h4>
+                      <p className="text-white/95 text-sm leading-relaxed drop-shadow-sm">{module.description}</p>
                     </div>
                   ))}
                 </div>
@@ -335,7 +333,7 @@ export default function Agents() {
 
               <button
                 onClick={openChat}
-                className="w-full py-4 bg-white text-primary hover:bg-white-soft font-bold text-xl rounded-xl transition-all duration-300 shadow-lg"
+                className="w-full py-4 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white font-bold text-xl rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl"
               >
                 Quiero contratar a {currentAgent.name}
               </button>
@@ -349,13 +347,13 @@ export default function Agents() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: 'url(/fondo-index.jpg)' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/85 via-primary-dark/75 to-primary/70 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/90 via-primary-dark/85 to-primary-dark/80" />
 
         <div className="relative z-10 max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold mb-6 text-center">
+          <h2 className="text-4xl font-bold mb-6 text-center drop-shadow-lg">
             Integraciones Personalizadas
           </h2>
-          <p className="text-white-soft text-lg max-w-3xl mx-auto text-center mb-12">
+          <p className="text-white drop-shadow-md text-lg max-w-3xl mx-auto text-center mb-12 leading-relaxed">
             Nos conectamos a tu stack: CRM, ERP, bases SQL, Shopify / MercadoLibre, telefonía VoIP y APIs internas.
             Si tu sistema no tiene API, armamos conectores (o scraping seguro) para sacar los datos que haga falta.
             Hacemos la integración segura, con permisos y guardando siempre tu privacidad.
@@ -365,20 +363,20 @@ export default function Agents() {
             {integrations.map((integration, idx) => (
               <div
                 key={idx}
-                className="p-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl"
+                className="p-6 bg-white/20 backdrop-blur-xl border-2 border-white/30 rounded-xl shadow-lg hover:bg-white/30 transition-all duration-300"
               >
-                <p className="text-white-soft text-lg">{integration}</p>
+                <p className="text-white drop-shadow-sm text-lg leading-relaxed">{integration}</p>
               </div>
             ))}
           </div>
 
           <div className="text-center">
-            <p className="text-2xl font-semibold text-white-soft mb-8">
+            <p className="text-2xl font-semibold text-white mb-8 drop-shadow-lg leading-relaxed">
               Si tu empresa tiene un sistema, nosotros lo hacemos hablar con nuestros agentes.
             </p>
             <button
               onClick={openChat}
-              className="px-8 py-4 bg-white text-primary hover:bg-white-soft font-semibold rounded-xl transition-colors"
+              className="px-8 py-4 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white font-bold rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl"
             >
               Contanos sobre tu infraestructura
             </button>

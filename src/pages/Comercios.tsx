@@ -108,7 +108,7 @@ export default function Comercios({ onOpenChat }: ComerciosProps) {
 
   return (
     <div className="min-h-screen bg-black-corp">
-      <div className="relative min-h-screen">
+      <div className="relative min-h-screen flex flex-col">
         <video
           autoPlay
           muted
@@ -122,34 +122,36 @@ export default function Comercios({ onOpenChat }: ComerciosProps) {
           />
         </video>
 
-        <div className="relative z-10 pt-24 pb-16 px-4">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-                IA Simple para Comercios
-              </h1>
-              <p className="text-xl text-white-soft max-w-3xl mx-auto">
-                Que venden por chat. Respondé sólo lo que importa.
-              </p>
-            </div>
+        <div className="relative z-10 flex-1 flex flex-col justify-between pt-24">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+              IA Simple para Comercios
+            </h1>
+            <p className="text-xl text-white-soft max-w-3xl mx-auto">
+              Que venden por chat. Respondé sólo lo que importa.
+            </p>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {products.map((product) => {
-                const Icon = product.icon;
-                return (
-                  <button
-                    key={product.id}
-                    onClick={() => handleProductClick(product)}
-                    className="group p-8 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl hover:bg-white/20 transition-all duration-300 text-left h-full"
-                  >
-                    <Icon className="w-12 h-12 text-primary mb-4" />
-                    <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
-                      {product.title}
-                    </h3>
-                    <p className="text-white-soft">{product.description}</p>
-                  </button>
-                );
-              })}
+          <div className="px-4 pb-8">
+            <div className="max-w-7xl mx-auto">
+              <div className="flex flex-wrap justify-center gap-4">
+                {products.map((product) => {
+                  const Icon = product.icon;
+                  return (
+                    <button
+                      key={product.id}
+                      onClick={() => handleProductClick(product)}
+                      className="group flex-1 min-w-[200px] max-w-xs p-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl hover:bg-white/20 transition-all duration-300 text-left"
+                    >
+                      <Icon className="w-8 h-8 text-primary mb-2" />
+                      <h3 className="text-lg font-bold text-white mb-1 group-hover:text-primary transition-colors">
+                        {product.title}
+                      </h3>
+                      <p className="text-white-soft text-sm">{product.description}</p>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

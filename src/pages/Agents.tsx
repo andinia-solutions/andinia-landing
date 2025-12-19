@@ -17,9 +17,44 @@ interface Agent {
     description: string;
   }[];
   cta: string;
+  embedUrl?: string;
 }
 
 const agents: Agent[] = [
+  {
+    id: 'cande',
+    name: 'CANDE',
+    role: 'Sales Agent 24/7 & CX Automation',
+    icon: MessageSquare,
+    pitch: 'Atiendo, califico y convierto. Soy la vendedora que no duerme. Recupero leads, agendo demos y hago seguimiento.',
+    whatDoesItDo:
+      'Cande atiende chats y llamadas, califica el lead y hace el seguimiento para convertir. No solo responde: propone la oferta correcta, agenda demos, envía material y, si el cliente está listo, lo pasa a facturación. Además orquesta secuencias de follow-up personalizadas como si las hubiera escrito un vendedor humano.',
+    problemsSolved: [
+      'Leads que se enfrían porque nadie los sigue.',
+      'Vendedores con poca disponibilidad para responder fuera de horario.',
+      'Falta de personalización en follow-ups.',
+    ],
+    integration:
+      'Se conecta a tu WhatsApp Business/Instagram/Facebook y (si lo requieres) a tu CRM. Cande guarda la conversación, etiqueta el lead y dispara la secuencia que acuerdes.',
+    modules: [
+      {
+        title: 'Sales Agent 24/7',
+        description:
+          'Atención, calificación de leads, explicación de productos y agenda de llamadas/visitas por WhatsApp, IG y Facebook.',
+      },
+      {
+        title: 'Follow-Up & Nurturing IA',
+        description: 'Secuencias personalizadas para leads fríos y recuperación de leads.',
+      },
+      {
+        title: 'CX Personalizada',
+        description:
+          'Mantiene el vínculo con el cliente (promociones, aniversarios, encuestas) y recupera carritos.',
+      },
+    ],
+    cta: 'Basta de dejar clientes colgados, que tu equipo se encargue de cerrar a los que tienen intención de compra.',
+    embedUrl: 'https://drive.google.com/file/d/1nVfi92pBeTk_J_0GzjozUmkQ_nCf-bH2/preview',
+  },
   {
     id: 'marti',
     name: 'MARTI',
@@ -53,39 +88,7 @@ const agents: Agent[] = [
       },
     ],
     cta: 'Generá story-telling y dale esa calidad profesional que antes llevaba tiempo, rápidamente.',
-  },
-  {
-    id: 'cande',
-    name: 'CANDE',
-    role: 'Sales Agent 24/7 & CX Automation',
-    icon: MessageSquare,
-    pitch: 'Atiendo, califico y convierto. Soy la vendedora que no duerme. Recupero leads, agendo demos y hago seguimiento.',
-    whatDoesItDo:
-      'Cande atiende chats y llamadas, califica el lead y hace el seguimiento para convertir. No solo responde: propone la oferta correcta, agenda demos, envía material y, si el cliente está listo, lo pasa a facturación. Además orquesta secuencias de follow-up personalizadas como si las hubiera escrito un vendedor humano.',
-    problemsSolved: [
-      'Leads que se enfrían porque nadie los sigue.',
-      'Vendedores con poca disponibilidad para responder fuera de horario.',
-      'Falta de personalización en follow-ups.',
-    ],
-    integration:
-      'Se conecta a tu WhatsApp Business/Instagram/Facebook y (si lo requieres) a tu CRM. Cande guarda la conversación, etiqueta el lead y dispara la secuencia que acuerdes.',
-    modules: [
-      {
-        title: 'Sales Agent 24/7',
-        description:
-          'Atención, calificación de leads, explicación de productos y agenda de llamadas/visitas por WhatsApp, IG y Facebook.',
-      },
-      {
-        title: 'Follow-Up & Nurturing IA',
-        description: 'Secuencias personalizadas para leads fríos y recuperación de leads.',
-      },
-      {
-        title: 'CX Personalizada',
-        description:
-          'Mantiene el vínculo con el cliente (promociones, aniversarios, encuestas) y recupera carritos.',
-      },
-    ],
-    cta: 'Basta de dejar clientes colgados, que tu equipo se encargue de cerrar a los que tienen intención de compra.',
+    // embedUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/preview',
   },
   {
     id: 'marcos',
@@ -125,6 +128,7 @@ const agents: Agent[] = [
       },
     ],
     cta: 'Tus datos a un mensaje de distancia, dejá que la IA te muestre lo que necesitás para tomar decisiones optimizadas.',
+    // embedUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/preview',
   },
   {
     id: 'joel',
@@ -159,6 +163,7 @@ const agents: Agent[] = [
       },
     ],
     cta: 'Tené a Joel siempre disponible para preguntarle lo que quieras.',
+    // embedUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/preview',
   },
 ];
 
@@ -215,7 +220,7 @@ export default function Agents() {
 
         <div className="relative z-10 flex-1 flex flex-col justify-end pt-24 pb-4 px-4">
           {/* Header con nombre y rol en la misma línea */}
-          <div className="text-center mb-auto mt-8">
+          <div className="text-center mb-4 mt-8">
             <div className="flex items-center justify-center gap-3 flex-wrap">
               <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg">
                 {currentAgent.name}
@@ -225,6 +230,21 @@ export default function Agents() {
               </span>
             </div>
           </div>
+
+          {/* Google Drive Embed */}
+          {currentAgent.embedUrl && (
+            <div className="flex-1 flex items-center justify-center px-4 mb-4">
+              <div className="w-full max-w-4xl aspect-video rounded-2xl overflow-hidden shadow-2xl border-2 border-white/20 backdrop-blur-sm">
+                <iframe
+                  src={currentAgent.embedUrl}
+                  className="w-full h-full"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  title={`${currentAgent.name} Video`}
+                />
+              </div>
+            </div>
+          )}
 
           {/* Navegación entre agentes */}
           <div className="flex justify-center items-center gap-4 mb-4">

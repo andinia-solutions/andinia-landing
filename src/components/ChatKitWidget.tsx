@@ -83,12 +83,12 @@ export default function ChatKitWidget() {
     onClientTool: async (toolCall) => {
       const userEmail = localStorage.getItem(STORAGE_KEY_EMAIL);
 
-      console.log('Client tool called:', toolCall.name, toolCall.params);
-
       switch (toolCall.name) {
-        case 'get_lead_email': {
-          const result = { email: userEmail || 'unknown' };
-          console.log('Returning result:', result);
+        case 'get_user_context': {
+          const result = {
+            time: new Date().toISOString(),
+            email: userEmail || 'unknown'
+          };
           return result;
         }
 

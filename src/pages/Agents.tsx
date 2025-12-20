@@ -17,7 +17,7 @@ interface Agent {
     description: string;
   }[];
   cta: string;
-  embedUrl?: string;
+  videoUrl?: string;
 }
 
 const agents: Agent[] = [
@@ -53,7 +53,7 @@ const agents: Agent[] = [
       },
     ],
     cta: 'Basta de dejar clientes colgados, que tu equipo se encargue de cerrar a los que tienen intención de compra.',
-    embedUrl: 'https://drive.google.com/file/d/1nVfi92pBeTk_J_0GzjozUmkQ_nCf-bH2/preview',
+    videoUrl: 'https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Cande.mp4',
   },
   {
     id: 'marti',
@@ -88,7 +88,7 @@ const agents: Agent[] = [
       },
     ],
     cta: 'Generá story-telling y dale esa calidad profesional que antes llevaba tiempo, rápidamente.',
-    // embedUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/preview',
+    // videoUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/preview',
   },
   {
     id: 'marcos',
@@ -128,7 +128,7 @@ const agents: Agent[] = [
       },
     ],
     cta: 'Tus datos a un mensaje de distancia, dejá que la IA te muestre lo que necesitás para tomar decisiones optimizadas.',
-    // embedUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/preview',
+    // videoUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/preview',
   },
   {
     id: 'joel',
@@ -163,7 +163,7 @@ const agents: Agent[] = [
       },
     ],
     cta: 'Tené a Joel siempre disponible para preguntarle lo que quieras.',
-    // embedUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/preview',
+    // videoUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/preview',
   },
 ];
 
@@ -193,7 +193,8 @@ export default function Agents() {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.currentTime = 0;
+      videoRef.current.load();
+      videoRef.current.play();
     }
   }, [currentAgentIndex]);
 
@@ -208,12 +209,8 @@ export default function Agents() {
           muted
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source
-            src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-            type="video/mp4"
-          />
-        </video>
+          src={currentAgent.videoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'}
+        />
         
         {/* Overlay sutil solo para contraste de texto */}
         <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/60 via-primary-dark/70 to-primary-dark/80" />
@@ -230,21 +227,6 @@ export default function Agents() {
               </span>
             </div>
           </div>
-
-          {/* Google Drive Embed */}
-          {currentAgent.embedUrl && (
-            <div className="flex-1 flex items-center justify-center px-4 mb-4">
-              <div className="w-full max-w-4xl aspect-video rounded-2xl overflow-hidden shadow-2xl border-2 border-white/20 backdrop-blur-sm">
-                <iframe
-                  src={currentAgent.embedUrl}
-                  className="w-full h-full"
-                  allow="autoplay; encrypted-media"
-                  allowFullScreen
-                  title={`${currentAgent.name} Video`}
-                />
-              </div>
-            </div>
-          )}
 
           {/* Navegación entre agentes */}
           <div className="flex justify-center items-center gap-4 mb-4">

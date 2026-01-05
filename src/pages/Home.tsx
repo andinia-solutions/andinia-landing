@@ -114,15 +114,17 @@ export default function Home() {
                   Chateá con nuestra Agente de Ventas y descubrí qué podemos hacer por vos
                 </button>
 
-                <p className="text-sm font-semibold text-primary mb-2.5">
+                <p className="text-sm font-semibold text-primary mb-2.5 text-center">
                   Optimizá o automatizá tus flujos de trabajo con IA
                 </p>
+              </div>
 
+              <div className="flex justify-center mt-3">
                 <Link
                   to="/agents"
-                  className="inline-flex items-center text-primary hover:text-primary-dark font-semibold text-sm transition-colors"
+                  className="inline-flex items-center text-white hover:text-white/80 font-semibold text-lg transition-colors"
                 >
-                  Conocé a nuestros Agentes <ArrowRight className="ml-2 w-4 h-4" />
+                  Conocé a nuestros Agentes <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
               </div>
             </div>
@@ -139,7 +141,7 @@ export default function Home() {
                 className="w-full h-full object-cover"
               >
                 <source
-                  src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                  src="https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/index.mp4"
                   type="video/mp4"
                 />
               </video>

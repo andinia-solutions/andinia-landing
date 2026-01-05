@@ -30,36 +30,36 @@ export default function ProductModal({
         onClick={onClose}
       />
 
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border-2 border-primary/20">
-        <div className="sticky top-0 bg-white border-b-2 border-primary/20 p-6 flex items-center justify-between z-10">
-          <h2 className="text-3xl font-bold text-primary">{title}</h2>
+      <div className="relative bg-gradient-to-br from-primary-dark to-primary/30 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border-2 border-white/20">
+        <div className="sticky top-0 bg-primary-dark/80 backdrop-blur-md border-b border-white/20 p-6 flex items-center justify-between z-10">
+          <h2 className="text-3xl font-bold text-white drop-shadow-lg">{title}</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-primary/10 rounded-full transition-colors"
+            className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors group"
           >
-            <X className="w-6 h-6 text-black-corp" />
+            <X className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
           </button>
         </div>
 
         <div className="p-8 space-y-8">
           <div>
-            <h3 className="text-xl font-bold text-black-corp mb-4">Qué hace</h3>
-            <p className="text-black-corp/90 text-lg leading-relaxed">{whatDoes}</p>
+            <h3 className="text-xl font-bold text-white mb-4 drop-shadow-md">Qué hace</h3>
+            <p className="text-white/95 text-lg leading-relaxed drop-shadow-sm">{whatDoes}</p>
           </div>
 
           <div>
-            <h3 className="text-xl font-bold text-black-corp mb-4">Dolor que resuelve</h3>
-            <p className="text-black-corp/90 text-lg leading-relaxed">{painPoints}</p>
+            <h3 className="text-xl font-bold text-white mb-4 drop-shadow-md">Dolor que resuelve</h3>
+            <p className="text-white/95 text-lg leading-relaxed drop-shadow-sm">{painPoints}</p>
           </div>
 
-          <div className="bg-primary/15 rounded-xl p-6 border-2 border-primary/30 shadow-lg">
-            <p className="text-lg text-primary font-bold leading-relaxed">{copyLanding}</p>
+          <div className="bg-white/10 rounded-xl p-6 border border-white/20 shadow-lg backdrop-blur-md">
+            <p className="text-lg text-white font-bold leading-relaxed">{copyLanding}</p>
           </div>
 
           {contextualInfo && (
-            <div className="bg-white-soft rounded-xl p-6 border-2 border-primary/20 shadow-md">
-              <h3 className="text-lg font-bold text-black-corp mb-3">Contexto adicional</h3>
-              <p className="text-black-corp/90 text-base leading-relaxed">{contextualInfo}</p>
+            <div className="bg-white/5 rounded-xl p-6 border border-white/10 shadow-md">
+              <h3 className="text-lg font-bold text-white mb-3">Contexto adicional</h3>
+              <p className="text-white/90 text-base leading-relaxed">{contextualInfo}</p>
             </div>
           )}
 
@@ -69,6 +69,8 @@ export default function ProductModal({
           >
             Lo quiero
           </button>
+
+
         </div>
       </div>
     </div>

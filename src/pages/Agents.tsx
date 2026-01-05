@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ChevronRight, Zap, MessageSquare, BarChart3, Headset, ChevronDown } from 'lucide-react';
+import { ChevronRight, Zap, MessageSquare, BarChart3, Headset, ChevronDown, X, Volume2, VolumeX } from 'lucide-react';
 import Footer from '../components/Footer';
 import { useChat } from '../context/ChatContext';
 
@@ -24,57 +24,57 @@ const agents: Agent[] = [
   {
     id: 'cande',
     name: 'CANDE',
-    role: 'Sales Agent 24/7 & CX Automation',
+    role: 'Agentes de ventas y experta en CX',
     icon: MessageSquare,
-    pitch: 'Atiendo, califico y convierto. Soy la vendedora que no duerme. Recupero leads, agendo demos y hago seguimiento.',
+    pitch: 'Atiendo y califico leads para que tus talentos sólo se encarguen de cerrar. Soy vendedora, recupero a tus clientes y les hago seguimiento 24/7',
     whatDoesItDo:
-      'Cande atiende chats y llamadas, califica el lead y hace el seguimiento para convertir. No solo responde: propone la oferta correcta, agenda demos, envía material y, si el cliente está listo, lo pasa a facturación. Además orquesta secuencias de follow-up personalizadas como si las hubiera escrito un vendedor humano.',
+      'Cande atiende chats y llamadas en todas las redes que la quieras implementar. Le manda recordatorios a tus clientes, les hace post-venta y les envía promociones. No solo responde todos los mensajes repetitivos: conoce tus productos, conoce tus clientes. Sabe cuando responder y resolver rápido y también cuando dejar que un humano se encargue.',
     problemsSolved: [
       'Leads que se enfrían porque nadie los sigue.',
-      'Vendedores con poca disponibilidad para responder fuera de horario.',
-      'Falta de personalización en follow-ups.',
+      'Vendedores que no responden fuera del horario laboral.',
+      'Empleados que pierden tiempo respondiendo consultas repetitivas.',
     ],
     integration:
       'Se conecta a tu WhatsApp Business/Instagram/Facebook y (si lo requieres) a tu CRM. Cande guarda la conversación, etiqueta el lead y dispara la secuencia que acuerdes.',
     modules: [
       {
-        title: 'Sales Agent 24/7',
+        title: 'Vende 24/7',
         description:
-          'Atención, calificación de leads, explicación de productos y agenda de llamadas/visitas por WhatsApp, IG y Facebook.',
+          'Es un agente omnicanal que va a responder en todas tus redes 24/7, atender y conocer a tus clientes, además de juntar data útil para decisiones futuras. Incluye atención instantánea, calificación de leads, estudio de necesidades y agenda automática de llamadas/visitas en tu calendario.',
       },
       {
-        title: 'Follow-Up & Nurturing IA',
-        description: 'Secuencias personalizadas para leads fríos y recuperación de leads.',
+        title: 'Follow-Up',
+        description: 'Envía campañas configuradas por tus profesionales a leads frios o clientes que no volvieron. Ofrece productos nuevos o ofertas y sigue a los que respondan.',
       },
       {
         title: 'CX Personalizada',
         description:
-          'Mantiene el vínculo con el cliente (promociones, aniversarios, encuestas) y recupera carritos.',
+          'Mantiene el vínculo con el cliente, le pregunta como le fue con el producto/servicio, lo acompaña o deriva a soporte, y si se quiere hace encuestas para identificar puntos de dolor o mejora.',
       },
     ],
-    cta: 'Basta de dejar clientes colgados, que tu equipo se encargue de cerrar a los que tienen intención de compra.',
-    videoUrl: 'https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Cande.mp4',
+    cta: 'Basta de dejar clientes colgados, que tu equipo invierta el tiempo en cerrar a los que realmente tienen intención de compra.',
+    videoUrl: 'https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Cande-Agents.mp4',
   },
   {
     id: 'marti',
     name: 'MARTI',
-    role: 'Content Factory & Video Spokesperson',
+    role: 'Avatar IA y Generadora de contenido',
     icon: Zap,
-    pitch: 'Tu cara visible. Creo contenido, guiones y videos con avatares hiper-realistas para que tu marca hable sola.',
+    pitch: 'Tu cara visible. Creo contenido, guiones y videos 100% generados por IA, si nadie se quiere poner frente a la cámara, yo me encargo de eso.',
     whatDoesItDo:
-      'Marti crea el contenido que hace que la gente pare el scroll. Armamos guiones, calendarios y videos de Avatares IA hablando por vos — esos clips hiper-realistas y humanos que antes solo podían pagar las grandes productoras. Lo hacemos con herramientas IA topo-de-gama, lo pulimos con guion profesional y lo entregamos listo para publicar.',
+      'Marti crea el contenido que hace que la gente se concentre en tu contenido. Armamos guiones, calendarios y videos de Avatares IA hablando por vos — esos clips hiper-realistas y humanos que antes solo podían pagar las grandes productoras. Lo hacemos con herramientas IA topo-de-gama, lo pulimos con guion profesional y lo entregamos listo para que empieces a ser activo en tus redes.',
     problemsSolved: [
-      'Falta de contenido profesional sin el costo de una productora.',
-      'Mensajes inconsistentes entre canales.',
-      'Poca llegada orgánica y baja captación de leads.',
+      'Falta de contenido en redes',
+      'Videos poco profesionales y de mala calidad',
+      'Mensajes inconsistentes entre los diferentes canales',
     ],
     integration:
-      'Traemos tu material (logo, tono, fotos, brief) → generamos 3 pruebas → aprobás una → hacemos batch de contenido mensual o por pieza → lo programamos o te lo entregamos listo.',
+      'Traemos tu material (logo, tono, fotos, brief) → generamos 3 pruebas → aprobás una → generamos todo el contenido del mes o por pieza → lo programamos o te lo entregamos listo para que subas.',
     modules: [
       {
         title: 'Contenido para Redes',
         description:
-          'Guiones, ideas, copys y piezas listas para publicar para Reels, TikToks y videos explicativos.',
+          'Guiones, ideas, copys y piezas listas para publicar para Reels, TikToks y videos explicativos o publicación de novedades.',
       },
       {
         title: 'Videos Avatar IA',
@@ -87,100 +87,111 @@ const agents: Agent[] = [
           'Material profesional para atraer clientes (ebooks, guías, scripts de webinars) con tu tono y estética.',
       },
     ],
-    cta: 'Generá story-telling y dale esa calidad profesional que antes llevaba tiempo, rápidamente.',
-    // videoUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/preview',
+    cta: 'Generá story-telling y dale esa calidad profesional que antes era difícil de pagar.',
+    videoUrl: 'https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Marti-Agents.mp4',
   },
   {
     id: 'marcos',
     name: 'MARCOS',
-    role: 'BI-as-a-Service & Predictive Insights',
+    role: 'Experto en analísis de datos',
     icon: BarChart3,
-    pitch: 'Tus datos trabajando para vos. Dashboards, alertas de stock y predicción de demanda en tiempo real.',
+    pitch: 'Tus datos trabajando para vos. Genero dashboards, te envío alertas y reportes diarios con los puntos clave.',
     whatDoesItDo:
-      'Marcos transforma los datos en decisiones: arma dashboards por rol, automatiza reportes, crea alertas y modelos predictivos. Ya no tenés que pedir informes, Marcos te los manda y te avisa cuando algo se rompe. Conecta fuentes: CRM, Google Ads, WhatsApp logs, base de ventas, ERP.',
+      'Marcos transforma los datos en decisiones: arma dashboards, automatiza reportes, crea alertas. Se da cuenta escuchando a tus clientes donde hay dolor o te sugiere puntos de mejora. Ya no tenés que pedir informes las diferentes áreas, Marcos se conecta con tus sistemas y te los manda, obvio también te avisa cuando algo se rompe. Se conecta con tu CRM, Google Ads, WhatsApp logs, base de ventas, ERP.',
     problemsSolved: [
       'Decisiones "a ojo" sin datos reales.',
       'Reuniones largas por falta de reportes accionables.',
-      'Incapacidad para detectar problemas temprano.',
+      'Incapacidad para detectar problemas a tiempo.',
     ],
     integration:
-      'Conectamos APIs o bases (SQL, Postgres, hojas), limpiamos datos, armamos las visuales y te damos acceso web. Marcos también puede exportar informes listos para reunión o preparar slides.',
+      'Conectamos APIs o bases (SQL, Postgres, Excels), limpiamos datos, armamos las visuales y te damos acceso web. Marcos también puede exportar informes listos para reunión o preparar diapositivas.',
     modules: [
       {
-        title: 'BI-as-a-Service',
+        title: 'BI - Datos claros',
         description:
-          'Paneles simples para ver ventas, operaciones, soporte y rendimiento del equipo en un vistazo. Incluye Reportes diarios/semanales/mensuales y Alertas.',
+          'Paneles simples para ver ventas, operaciones, soporte y rendimiento del equipo en un vistazo. Incluye Reportes diarios/semanales/mensuales y alertas automatizadas.',
       },
       {
         title: 'Base de Datos Consultable por Mensaje',
         description:
-          'Podés hablarle a tus datos (ventas, rankings, proyecciones) y te responde en el chat, como tener un analista 24/7.',
+          'Podés hablarle a tus datos (ventas, rankings, proyecciones) y Marcos te responde por chat para que tomes las decisiones rápidas o encuentres detalles que no habías visto. Como tener un analista experto disponible 24/7.',
       },
       {
         title: 'Anomaly Detector',
         description:
-          'Detecta comportamientos raros (caídas en ventas, aumento de reclamos, métricas fuera de rango) y avisa antes que sea un drama.',
-      },
-      {
-        title: 'Predictive Insights',
-        description:
-          'Predice tendencias importantes: ventas, churn, demanda y recomienda la acción a priorizar.',
+          'Detecta comportamientos raros (caídas en ventas, aumento de reclamos, métricas fuera de rango) y avisa antes de que sean problemas graves.',
       },
     ],
-    cta: 'Tus datos a un mensaje de distancia, dejá que la IA te muestre lo que necesitás para tomar decisiones optimizadas.',
-    // videoUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/preview',
+    cta: 'Tus datos a un mensaje de distancia, dejá que la IA te muestre lo que necesitás para tomar las mejores decisiones.',
+    videoUrl: 'https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Marcos-Agents.mp4',
   },
   {
     id: 'joel',
     name: 'JOEL',
-    role: 'Soporte Técnico IA & IT Assistant',
+    role: 'Soporte Técnico para tu equipo y tus clientes',
     icon: Headset,
-    pitch: 'Soporte técnico nivel 1 y guías paso a paso. Resuelvo tickets internos y capacito a tus nuevos empleados.',
+    pitch: 'Soporte técnico de primer nivel y guías paso a paso. Capacito a tus nuevos empleados y respondo con pasos a tus clientes.',
     whatDoesItDo:
       'Joel es el primero en contestar cuando algo no anda. Guía al usuario paso a paso, aplica checks automáticos y resuelve lo que puede. Para problemas más profundos, prepara el diagnóstico y lo pasa al especialista correcto con toda la info ya cargada (logs, pasos ya probados, contexto).',
     problemsSolved: [
       'Soporte lento que frustra a clientes y empleados.',
-      'Repetición de tickets por falta de documentación clara.',
+      'Expertos perdiendo el tiempo resolviendo dudas simples y repetitivas.',
       'Onboarding lento de nuevos empleados por procesos mal documentados.',
     ],
     integration:
-      'Se conecta al sistema de tickets, puede ejecutar scripts remotos (según permisos), agrega entradas automáticas y actualiza la base de conocimientos con cada caso resuelto para que mejore con el tiempo.',
+      'Se conecta al sistema de tickets, puede ejecutar scripts remotos (según permisos), agrega entradas automáticas y actualiza la base de conocimientos con cada caso resuelto para que mejore con el tiempo. Además se conecta con tus diferentes canales de contacto para identificar cuando es un problema de soporte y guía a tu cliente, si no lo puede resolver, se lo deriva a un experto.',
     modules: [
       {
         title: 'Soporte Técnico IA',
         description:
-          'Solución de FAQs técnicas, reinicios guiados y derivación a técnico humano con resumen claro.',
+          'Solución de FAQs técnicas, reinicios guiados y derivación a técnico humano con resumen claro. Le resuelve rápido al cliente, cuando no puede, siempre hay un experto disponible para hacerlo.',
       },
       {
-        title: 'IT Assistant',
+        title: 'Experto en sistemas',
         description:
-          'Guías paso a paso personalizadas, diagnósticos automáticos y tutoriales para usar cualquier sistema interno.',
+          'Generación de guías paso a paso personalizadas, documentación de caso de uso, diagnósticos automáticos y tutoriales para usar cualquier sistema o producto. Organiza tu información.',
       },
       {
-        title: 'Helpdesk IA Interno',
+        title: 'Mesa de ayuda interna',
         description:
           'Búsqueda de políticas, procesos (vacaciones, licencias) y guías para nuevos empleados con respuestas inmediatas 24/7.',
       },
     ],
-    cta: 'Tené a Joel siempre disponible para preguntarle lo que quieras.',
-    // videoUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/preview',
+    cta: 'Todos pueden molestar a Joel para preguntarle lo que quieran, ya no tienen que leerse un manual completo o esperar horas a que se desocupe un IT y les responda.',
+    videoUrl: 'https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Joel-Agents.mp4',
   },
 ];
 
 const integrations = [
-  'Sistemas de gestión (SAP, Tango, Odoo, Bejerman)',
-  'CRMs corporativos (Salesforce, HubSpot, Zoho)',
+  'Sistemas de gestión (SAP, Tango, Odoo, Bejerman, otros)',
+  'CRMs corporativos (Salesforce, HubSpot, Zoho, otros)',
   'Bases SQL, MySQL, PostgreSQL y APIs internas',
   'Sistemas legacy sin API: scraping estructurado + conectores',
-  'Call centers y telefonía VoIP',
   'Plataformas de e-commerce y tickets',
 ];
 
 export default function Agents() {
   const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
   const [expandedAgent, setExpandedAgent] = useState<string | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const arrowTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleUnmute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+      setIsMuted(false);
+    }
+  };
+
+  const handleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      setIsMuted(true);
+    }
+  };
   const { openChat } = useChat();
 
   const currentAgent = agents[currentAgentIndex];
@@ -211,52 +222,79 @@ export default function Agents() {
           className="absolute inset-0 w-full h-full object-cover"
           src={currentAgent.videoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'}
         />
-        
-        {/* Overlay sutil solo para contraste de texto */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/60 via-primary-dark/70 to-primary-dark/80" />
 
-        <div className="relative z-10 flex-1 flex flex-col justify-end pt-24 pb-4 px-4">
-          {/* Header con nombre y rol en la misma línea */}
-          <div className="text-center mb-4 mt-8">
-            <div className="flex items-center justify-center gap-3 flex-wrap">
-              <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg">
-                {currentAgent.name}
-              </h1>
-              <span className="text-white/80 text-lg md:text-xl drop-shadow-md">
-                {currentAgent.role}
-              </span>
+        {/* Blur Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black-corp/20 to-black-corp/90" />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backdropFilter: 'blur(20px)',
+            maskImage: 'linear-gradient(to bottom, black 0%, transparent 40%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 40%)'
+          }}
+        />
+
+        {/* Unmute/Reset Button */}
+        <button
+          onClick={isMuted ? handleUnmute : handleMute}
+          className="absolute top-24 left-4 z-20 p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 shadow-lg hover:bg-white/20 transition-all duration-300 group"
+        >
+          {isMuted ? (
+            <div className="flex items-center gap-2">
+              <VolumeX className="w-5 h-5 text-white/70 group-hover:text-white" />
+              <span className="text-xs text-white/70 group-hover:text-white font-medium pr-1">Desmutear video</span>
             </div>
-          </div>
+          ) : (
+            <Volume2 className="w-5 h-5 text-primary" />
+          )}
+        </button>
 
-          {/* Navegación entre agentes */}
-          <div className="flex justify-center items-center gap-4 mb-4">
-            <button
-              onClick={() => setCurrentAgentIndex((prev) => (prev - 1 + agents.length) % agents.length)}
-              className="p-2 bg-white/20 backdrop-blur-md rounded-full border-2 border-white/30 hover:bg-white/30 transition-all duration-300"
-            >
-              <ChevronRight className="w-6 h-6 text-white rotate-180 drop-shadow-lg" />
-            </button>
-            
-            <div className="flex space-x-2">
-              {agents.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentAgentIndex(idx)}
-                  className={`rounded-full transition-all duration-300 ${
-                    idx === currentAgentIndex 
-                      ? 'bg-primary w-10 h-3 shadow-lg' 
+        <div className="relative z-10 flex-1 flex flex-col justify-end pt-24 pb-4 px-4 md:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 items-end mb-4 mt-8 gap-4">
+            {/* Header con nombre y rol alineado a la izquierda */}
+            <div className="text-left w-full md:w-auto">
+              <div className="flex flex-col items-start justify-start gap-1">
+                <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-xl tracking-tight">
+                  {currentAgent.name}
+                </h1>
+                <span className="text-white text-lg md:text-xl font-medium drop-shadow-md tracking-wide leading-tight">
+                  {currentAgent.role}
+                </span>
+              </div>
+            </div>
+
+            {/* Navegación entre agentes */}
+            <div className="flex justify-center items-center gap-4">
+              <button
+                onClick={() => setCurrentAgentIndex((prev) => (prev - 1 + agents.length) % agents.length)}
+                className="p-2 bg-white/20 backdrop-blur-md rounded-full border-2 border-white/30 hover:bg-white/30 transition-all duration-300"
+              >
+                <ChevronRight className="w-6 h-6 text-white rotate-180 drop-shadow-lg" />
+              </button>
+
+              <div className="flex space-x-2">
+                {agents.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentAgentIndex(idx)}
+                    className={`rounded-full transition-all duration-300 ${idx === currentAgentIndex
+                      ? 'bg-primary w-10 h-3 shadow-lg'
                       : 'bg-white/40 hover:bg-white/60 w-3 h-3'
-                  }`}
-                />
-              ))}
+                      }`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={nextAgent}
+                className="p-2 bg-white/20 backdrop-blur-md rounded-full border-2 border-white/30 hover:bg-white/30 transition-all duration-300"
+              >
+                <ChevronRight className="w-6 h-6 text-white drop-shadow-lg" />
+              </button>
             </div>
 
-            <button
-              onClick={nextAgent}
-              className="p-2 bg-white/20 backdrop-blur-md rounded-full border-2 border-white/30 hover:bg-white/30 transition-all duration-300"
-            >
-              <ChevronRight className="w-6 h-6 text-white drop-shadow-lg" />
-            </button>
+            {/* Espaciador para mantener las flechas centradas en desktop */}
+            <div className="hidden md:block" />
           </div>
 
           {/* Pitch y botón abajo de la navegación */}
@@ -273,7 +311,10 @@ export default function Agents() {
           </div>
 
           {/* Indicador de scroll hacia abajo */}
-          <div className="h-[7vh] flex flex-col items-center justify-center gap-2 px-4 pb-2">
+          <div
+            className="h-[7vh] flex flex-col items-center justify-center gap-2 pb-2 cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={() => document.getElementById('integrations-section')?.scrollIntoView({ behavior: 'smooth' })}
+          >
             <p className="text-white/90 text-sm md:text-base font-medium drop-shadow-md">
               ¿Cómo nos integramos con tus sistemas?
             </p>
@@ -283,33 +324,39 @@ export default function Agents() {
       </div>
 
       {expandedAgent === currentAgent.id && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
-          <div className="bg-gradient-to-br from-primary-dark to-primary/30 rounded-3xl p-8 max-w-3xl max-h-[90vh] overflow-y-auto w-full border-2 border-white/20 shadow-2xl">
+        <div
+          className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4 cursor-pointer"
+          onClick={() => setExpandedAgent(null)}
+        >
+          <div
+            className="bg-gradient-to-br from-primary-dark to-primary/30 rounded-3xl p-8 max-w-3xl max-h-[90vh] overflow-y-auto w-full border-2 border-white/20 shadow-2xl cursor-default relative"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center justify-between mb-8 pb-6 border-b border-white/20">
               <div>
                 <h2 className="text-4xl font-bold text-white drop-shadow-lg">{currentAgent.name}</h2>
-                <p className="text-white drop-shadow-md text-lg mt-1">{currentAgent.role}</p>
+                <p className="text-white/90 drop-shadow-md text-lg mt-1">{currentAgent.role}</p>
               </div>
               <button
                 onClick={() => setExpandedAgent(null)}
-                className="p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors backdrop-blur-sm"
+                className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors backdrop-blur-sm group"
               >
-                <ChevronRight className="w-6 h-6 text-white rotate-90" />
+                <X className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
               </button>
             </div>
 
             <div className="space-y-8">
               <div>
-                <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-md">Qué hace (en serio)</h3>
+                <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-md">Qué hace</h3>
                 <p className="text-white/95 text-lg leading-relaxed drop-shadow-sm">{currentAgent.whatDoesItDo}</p>
               </div>
 
               <div>
-                <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-md">Problemas que ataca</h3>
+                <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-md">Puntos de dolor</h3>
                 <ul className="space-y-3">
                   {currentAgent.problemsSolved.map((problem, idx) => (
                     <li key={idx} className="flex items-start space-x-3">
-                      <span className="text-white-accent text-2xl mt-1 drop-shadow-md">•</span>
+                      <span className="text-primary-light text-2xl mt-1 drop-shadow-md">•</span>
                       <span className="text-white/95 text-lg drop-shadow-sm">{problem}</span>
                     </li>
                   ))}
@@ -322,10 +369,10 @@ export default function Agents() {
               </div>
 
               <div>
-                <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-md">Módulos de servicio</h3>
+                <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-md">Funciones</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {currentAgent.modules.map((module, idx) => (
-                    <div key={idx} className="bg-white/20 backdrop-blur-md rounded-xl p-5 border border-white/30 shadow-lg">
+                    <div key={idx} className="bg-white/10 backdrop-blur-md rounded-xl p-5 border border-white/20 shadow-lg hover:bg-white/15 transition-colors">
                       <h4 className="font-bold text-white mb-2 drop-shadow-md">{module.title}</h4>
                       <p className="text-white/95 text-sm leading-relaxed drop-shadow-sm">{module.description}</p>
                     </div>
@@ -339,12 +386,14 @@ export default function Agents() {
               >
                 Quiero contratar a {currentAgent.name}
               </button>
+
+
             </div>
           </div>
         </div>
       )}
 
-      <div className="relative py-20 px-4 text-white">
+      <div id="integrations-section" className="relative py-20 px-4 text-white">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: 'url(/fondo-index.jpg)' }}
@@ -353,12 +402,12 @@ export default function Agents() {
 
         <div className="relative z-10 max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold mb-6 text-center drop-shadow-lg">
-            Integraciones Personalizadas
+            Integraciones personalizadas, nuestro punto más valioso.
           </h2>
           <p className="text-white drop-shadow-md text-lg max-w-3xl mx-auto text-center mb-12 leading-relaxed">
-            Nos conectamos a tu stack: CRM, ERP, bases SQL, Shopify / MercadoLibre, telefonía VoIP y APIs internas.
-            Si tu sistema no tiene API, armamos conectores (o scraping seguro) para sacar los datos que haga falta.
-            Hacemos la integración segura, con permisos y guardando siempre tu privacidad.
+            Nos conectamos a tu stack: CRM, ERP, bases SQL, Shopify / MercadoLibre, y todas tus redes, además de tus APIs internas. Si tu sistema no tiene API, armamos conectores (o scraping seguro) para sacar los datos que haga falta. Hacemos la integración segura, con permisos y guardando siempre tu privacidad.
+            <br />
+            Contamos con un equipo especializado liderado por un ingeniero en software que se va a encargar de implementar IA en los sistemas a los que ya estás acostumbrado.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">

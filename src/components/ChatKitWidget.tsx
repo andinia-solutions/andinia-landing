@@ -46,7 +46,7 @@ export default function ChatKitWidget() {
     }
 
     setIsSubmitting(true);
-    
+
     // Save email to localStorage
     localStorage.setItem(STORAGE_KEY_EMAIL, email);
     setHasEmail(true);
@@ -102,16 +102,60 @@ export default function ChatKitWidget() {
   return (
     <>
       {/* Floating Button */}
-      <button
-        onClick={openChat}
-        className={`fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary-dark text-white px-6 py-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 flex items-center space-x-3 group ${isOpen ? 'hidden' : ''}`}
-      >
-        <MessageCircle className="w-6 h-6" />
-        <span className="font-medium hidden sm:inline">
-          Contanos y descubrí qué podemos hacer por vos
-        </span>
-        <span className="font-medium sm:hidden">Agendá tu reunión</span>
-      </button>
+      {/* Custom Styles for Cursor Animation */}
+      <style>{`
+        @keyframes cursor-click {
+          0% { transform: translate(10px, 10px) scale(1); }
+          30% { transform: translate(0, 0) scale(1); }
+          40% { transform: translate(0, 0) scale(0.9); }
+          50% { transform: translate(0, 0) scale(1); }
+          80% { transform: translate(0, 0) scale(1); }
+          100% { transform: translate(10px, 10px) scale(1); }
+        }
+      `}</style>
+
+      {/* Floating Button */}
+      <div className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${isOpen ? 'hidden' : 'flex'}`}>
+        {/* Pulsing Back Glow */}
+        <div className="absolute inset-0 bg-primary/40 rounded-full animate-ping pointer-events-none" />
+
+        {/* Gradient Glow */}
+        <div className="absolute -inset-1 bg-gradient-to-br from-primary via-blue-400 to-purple-500 rounded-full blur opacity-40 animate-pulse pointer-events-none" />
+
+        <button
+          onClick={openChat}
+          className="relative w-16 h-16 bg-gradient-to-br from-primary to-black-corp rounded-full shadow-[0_0_20px_rgba(var(--primary-rgb),0.5)] border border-white/20 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.8)] flex items-center justify-center group overflow-hidden"
+        >
+          {/* Internal reflection */}
+          <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
+
+          <MessageCircle className="w-8 h-8 text-white relative z-10" />
+
+          {/* Cursor Animation */}
+          <div
+            className="absolute bottom-2 right-2 pointer-events-none z-20 drop-shadow-xl"
+            style={{ animation: 'cursor-click 2.5s infinite ease-in-out' }}
+          >
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="white"
+              stroke="black"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="transform -rotate-12"
+            >
+              <path d="M14 4.1 12 6" />
+              <path d="m5.1 8-2.9-.8" />
+              <path d="m6 12-1.9 2" />
+              <path d="M7.2 2.2 8 5.1" />
+              <path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z" />
+            </svg>
+          </div>
+        </button>
+      </div>
 
       {/* Chat Modal */}
       {isOpen && (
@@ -169,11 +213,10 @@ export default function ChatKitWidget() {
                             setEmailError('');
                           }}
                           placeholder="tu@email.com"
-                          className={`w-full px-4 py-3 pl-11 rounded-xl border-2 transition-all duration-200 outline-none text-gray-900 placeholder-gray-400 ${
-                            emailError 
-                              ? 'border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-500/10' 
-                              : 'border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10'
-                          }`}
+                          className={`w-full px-4 py-3 pl-11 rounded-xl border-2 transition-all duration-200 outline-none text-gray-900 placeholder-gray-400 ${emailError
+                            ? 'border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-500/10'
+                            : 'border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10'
+                            }`}
                           autoFocus
                         />
                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />

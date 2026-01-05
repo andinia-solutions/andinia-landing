@@ -89,11 +89,11 @@ export default function Gastronomia() {
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source
-            src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+            src="https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Gastronomia.mp4"
             type="video/mp4"
           />
         </video>
-        
+
         {/* Overlay sutil solo para contraste de texto */}
         <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/60 via-primary-dark/70 to-primary-dark/80" />
 

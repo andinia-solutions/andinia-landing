@@ -20,9 +20,9 @@ const products: Product[] = [
   {
     id: 'booking',
     icon: CalendarCheck,
-    title: 'Booking Assistant',
+    title: 'Recepción automática e inteligente',
     description: 'Reservá cuando quieras, sin llamar',
-    modalTitle: 'Booking Assistant: Reservá cuando quieras, sin llamar',
+    modalTitle: 'Recepción automática e inteligente: Reservá cuando quieras, sin llamar',
     whatDoes:
       'Permite que el cliente reserve su turno online 24/7 (IG, WhatsApp, o llamada). Asigna horario disponible, notifica confirmación automática, y evita solapamientos.',
     painPoints:
@@ -35,10 +35,10 @@ const products: Product[] = [
     id: 'turnos',
     icon: Calendar,
     title: 'Turnos Bajo Control',
-    description: 'Agenda cero errores, cero pisadas',
-    modalTitle: 'Turnos Bajo Control: Agenda cero errores, cero pisadas',
+    description: 'Agenda con cero errores y cero pisadas',
+    modalTitle: 'Turnos Bajo Control: Agenda con cero errores y cero pisadas',
     whatDoes:
-      'Digitaliza la agenda: calendario visual, historial, quién trabaja y qué servicio. Evita double-booking, organiza a tu equipo sin drama y permite ver todo el día con claridad.',
+      'Digitaliza la agenda: calendario visual, historial, quién trabaja y qué servicio. Evita reservas dobles, organizá a tu equipo sin dramas y mirá la planificación del día con claridad.',
     painPoints:
       'Citas pisadas, caos de horarios, confusión con quién atiende qué, citas duplicadas.',
     copyLanding:
@@ -47,26 +47,26 @@ const products: Product[] = [
   {
     id: 'recordatorios',
     icon: Bell,
-    title: 'Auto-Recordatorios',
+    title: 'Recordatorios Automáticos',
     description: 'Que no te falte nadie',
-    modalTitle: 'Auto-Recordatorios: Que no te falte nadie',
+    modalTitle: 'Recordatorios Automáticos: Que no te falte nadie',
     whatDoes:
-      'Envía recordatorios automáticos (SMS / WhatsApp / mensaje) antes del turno + opción para confirmar o reprogramar. Si cancela, ofrece el turno a otro cliente en espera.',
+      'Envía recordatorios automáticos (SMS / WhatsApp / mensaje) antes del turno + opción para confirmar o reprogramar. Si cancela, ofrece el turno a otro cliente que llamó para atenderse ese día.',
     painPoints:
       'No-shows, cancelaciones de último minuto, huecos vacíos que te hacen perder plata.',
     copyLanding:
-      '¿Tu cliente se olvidó la cita? Un agente les habla para confirmar o reprogramar. Reduce drásticamente el ausentismo.',
+      '¿Tu cliente se olvidó la cita? Un agente les habla para confirmar o reprogramar siempre. Reduce drásticamente el ausentismo.',
     contextualInfo:
       'Función Extra: Si encuentra espacios libres los ofrece a los que se contacten ese día o estén en espera.',
   },
   {
     id: 'historial',
     icon: FileText,
-    title: 'Cliente + Historial',
-    description: 'Conocelos, no los trates en limpio',
-    modalTitle: 'Cliente + Historial: Conocelos, no los trates en limpio',
+    title: 'Seguimiento personalizado',
+    description: 'Conocelos, no los trates como el resto',
+    modalTitle: 'Seguimiento personalizado, no los trates como el resto',
     whatDoes:
-      'Guarda ficha de cada cliente: tratamientos anteriores, alergias, gustos, productos usados. Estos datos se los puede preguntar por WhatsApp o los puede cargar tu equipo.',
+      'Guarda la ficha de cada cliente: tratamientos anteriores, alergias, gustos, productos usados. Estos datos se los puede preguntar por WhatsApp o los puede cargar tu equipo.',
     painPoints:
       'Atención impersonal, tener que preguntar todo de nuevo, perder fidelidad por no recordar detalles.',
     copyLanding:
@@ -76,15 +76,15 @@ const products: Product[] = [
   {
     id: 'fidelizacion',
     icon: RotateCcw,
-    title: 'Post-Cita & Fidelización',
+    title: 'Post-Cita y Fidelización',
     description: 'Que vuelvan (y traigan amigas)',
-    modalTitle: 'Post-Cita & Fidelización: Que vuelvan (y traigan amigas)',
+    modalTitle: 'Post-Cita y Fidelización: Que vuelvan (y traigan amigas)',
     whatDoes:
-      'Después del turno, envía mensajes de seguimiento: "¿Te gustó?", "Recordatorio para tu próximo tratamiento", "Oferta por cumpleaños". Segmenta clientas, gestiona bonos/tarjetas regalo.',
+      'Después del turno, envía mensajes de seguimiento: "¿Cómo te sentiste en la sesión?", "Recordatorio para tu próximo tratamiento", "Oferta por cumpleaños". Segmenta clientas, gestioná bonos y tarjetas regalo.',
     painPoints:
-      'Olvidarse de hacer seguimiento. Poca recurrencia. Bajos ingresos recurrentes.',
+      'Olvidarse de hacer seguimiento. Poca recurrencia. Olvidarse de recordar las próximas sesiones del tratamiento',
     copyLanding:
-      'No se termina en la silla: post-cita, ofertas personalizadas y recordatorios para volver.',
+      'No se termina en el consultorio: post-cita, ofertas personalizadas y recordatorios para volver.',
   },
   {
     id: 'analytics',
@@ -93,7 +93,7 @@ const products: Product[] = [
     description: 'Sabés lo que anda y lo que no',
     modalTitle: 'Micro-Analytics: Sabés lo que anda y lo que no',
     whatDoes:
-      'Panel web con métricas clave: % de asistencia, treatments más pedidos, días/hora pico, clientes fieles, tasa de cancelación, ingresos por tratamiento. Te sugiere cuándo abrir promociones.',
+      'Panel web con métricas clave: % de asistencia, treatments más pedidos, días/hora pico, clientes fieles, tasa de cancelación, ingresos por tratamiento. Te sugiere cuándo abrir promociones. Además de un chat que conoce tu negocio y le podés preguntar "Qué tratamiento me trae más problemas?", "Que producto es el que más se llevan después de las sesiones?".',
     painPoints:
       'Trabajar a ciegas, no saber qué funciona o cuándo impulsar, decidir a ojo.',
     copyLanding:
@@ -116,7 +116,70 @@ export default function Bienestar() {
 
   return (
     <div className="min-h-screen bg-black-corp">
-      <div className="relative min-h-screen flex flex-col">
+      {/* MOBILE LAYOUT */}
+      <div className="md:hidden mobile-video-section">
+        {/* Video Header 16:9 */}
+        <div className="mobile-video-header">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            <source
+              src="https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Bienestar.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <div className="video-overlay" />
+          <div className="video-content">
+            <h1 className="video-title">
+              Agenda Llena, Cero Ausencias
+            </h1>
+          </div>
+        </div>
+
+        {/* Cards Grid con fondo de imagen */}
+        <div className="relative py-4">
+          {/* Imagen de fondo */}
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: 'url(/fondo-cards-mobile.jpg)' }}
+          />
+          {/* Overlay difuminado */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/85 via-primary-dark/75 to-primary/70 backdrop-blur-sm" />
+
+          {/* Título de sección */}
+          <h2 className="relative z-10 text-center text-white text-lg font-bold pt-4 pb-2 px-4">
+            Lo nuevo en IA disponible para tu industria
+          </h2>
+
+          {/* Cards */}
+          <div className="relative z-10 mobile-cards-grid">
+            {products.map((product) => {
+              const Icon = product.icon;
+              return (
+                <button
+                  key={product.id}
+                  onClick={() => handleProductClick(product)}
+                  className="mobile-card bg-white/15 backdrop-blur-xl border border-white/20 rounded-xl hover:bg-white/25 transition-all duration-300 text-left shadow-lg"
+                >
+                  <div className="card-icon p-2 bg-primary/30 backdrop-blur-sm rounded-lg w-fit">
+                    <Icon className="w-5 h-5 text-white drop-shadow-md" />
+                  </div>
+                  <h3 className="text-sm font-bold text-white group-hover:text-white-accent transition-colors drop-shadow-md">
+                    {product.title}
+                  </h3>
+                  <p className="text-white/90 text-xs leading-relaxed drop-shadow-sm">{product.description}</p>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* DESKTOP LAYOUT - Sin cambios */}
+      <div className="hidden md:block relative min-h-screen">
         <video
           autoPlay
           muted
@@ -130,10 +193,9 @@ export default function Bienestar() {
           />
         </video>
 
-        {/* Overlay sutil solo para contraste de texto */}
         <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/60 via-primary-dark/70 to-primary-dark/80" />
 
-        <div className="relative z-10 flex-1 flex flex-col justify-between pt-24">
+        <div className="relative z-10 flex flex-col justify-between pt-24 min-h-screen">
           <div className="text-center pt-4">
             <h1 className="text-xl md:text-2xl font-bold text-white mb-1 drop-shadow-lg">
               Agenda Llena, Cero Ausencias
@@ -143,8 +205,11 @@ export default function Bienestar() {
             </p>
           </div>
 
-          <div className="px-4 pb-8">
-            <div className="max-w-7xl mx-auto">
+          <div className="px-4 pb-8 flex-1 flex items-end">
+            <div className="max-w-7xl mx-auto w-full">
+              <h2 className="text-center text-white text-xl font-bold mb-6 drop-shadow-lg">
+                Lo nuevo en IA disponible para tu industria
+              </h2>
               <div className="flex flex-wrap justify-center gap-4">
                 {products.map((product) => {
                   const Icon = product.icon;

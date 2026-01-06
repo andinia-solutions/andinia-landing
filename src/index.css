@@ -1,3 +1,106 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ============================================
+   ESTILOS ESPECÍFICOS PARA MOBILE
+   Estos estilos solo aplican en pantallas < 768px
+   ============================================ */
+
+/* Video en 16:9 en la parte superior para mobile */
+@media (max-width: 767px) {
+  .mobile-video-section {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    padding-top: 5rem;
+    /* Espacio para la topbar (80px) */
+  }
+
+  .mobile-video-header {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+  }
+
+  .mobile-video-header video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mobile-video-header .video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+        rgba(10, 31, 68, 0.6) 0%,
+        rgba(10, 31, 68, 0.3) 100%);
+  }
+
+  .mobile-video-header .video-content {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    text-align: center;
+  }
+
+  .mobile-video-header .video-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Cards en 2 columnas más compactas */
+  .mobile-cards-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+    padding: 1rem !important;
+  }
+
+  .mobile-card {
+    min-width: unset !important;
+    max-width: unset !important;
+    padding: 0.75rem !important;
+    flex: unset !important;
+  }
+
+  .mobile-card .card-icon {
+    padding: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .mobile-card .card-icon svg {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+  }
+
+  .mobile-card h3 {
+    font-size: 0.8rem !important;
+    margin-bottom: 0.25rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .mobile-card p {
+    font-size: 0.7rem !important;
+    line-height: 1.3 !important;
+  }
+}
+
+/* Asegurar que en desktop todo quede igual */
+@media (min-width: 768px) {
+  .mobile-video-section {
+    min-height: 100vh;
+  }
+}

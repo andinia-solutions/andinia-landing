@@ -34,28 +34,28 @@ const products: Product[] = [
   {
     id: 'auto-responder',
     icon: MessageSquare,
-    title: 'Smart Auto-responder',
-    description: 'IA que responde por vos pero con tu forma de hablar',
-    modalTitle: 'Smart Auto-responder: IA que responde por vos pero con tu forma de hablar',
+    title: 'Respuestas 24/7',
+    description: 'IA que responde por vos pero con tu forma de hablar.',
+    modalTitle: 'Respuestas 24/7: IA que responde por vos pero con tu forma de hablar',
     whatDoes:
-      'Responde automáticamente consultas típicas (precio, stock, horario, envío, combos, talles) con lenguaje local ("Sí, tenemos en talle L", "Te queda el envío hoy"). Si detecta intención de compra fuerte, pasa a humano al toque.',
+      'Responde automáticamente consultas típicas (precio, stock, horario, envío, combos, talles) con lenguaje local ("Sí, tenemos en talle L", "El envío sale hoy"). Si detecta intención de compra fuerte, deriva al humano en seguida para que cierre la venta.',
     painPoints:
-      '80% de mensajes repetidos. Clientes que se te van por tardar en responder. Consultas a las 23:30 = venta perdida.',
+      '80% de mensajes repetitivos. Clientes que se te van por tardar en responder. Consultas a las 23:30 = venta perdida.',
     copyLanding:
-      '¿Cuánto sale? ¿Tenés stock? ¿Hacen envío? Esto y más respondido al instante. Cuando el cliente quiere hablar con vos, lo pasa directo a humano.',
+      '¿Cuánto sale? ¿Tenés stock? ¿Hacen envío? Esto y más respondido al instante. Cuando el cliente quiere hablar con vos, lo deriva rápidamente a tu equipo.',
     contextualInfo:
-      'Tuviste que unir 3 dolores en uno: 80% de mensajes repetidos + Clientes que se van por tardar + Consultas fuera de horario.',
+      'Resuelve 3 dolores en uno: 80% de mensajes repetitivos + Clientes que se van por tardar + Consultas fuera de horario.',
   },
   {
     id: 'order-assistant',
     icon: ClipboardList,
-    title: 'Order Assistant',
+    title: 'Asistente de ordenes',
     description: 'Pedidos bajo control',
-    modalTitle: 'Order Assistant: Pedidos bajo control',
+    modalTitle: 'Asistente de ordenes: Pedidos bajo control',
     whatDoes:
       'Captura pedidos desde WhatsApp/Instagram. Pregunta qué quiere, consulta stock, arma un resumen, genera un comprobante simple y hace seguimiento automático: "¿Pudiste hacer el pago?", "¿Coordinamos la entrega?".',
     painPoints:
-      'Ventas perdidas por falta de seguimiento. Mensajes mezclados. Clientes que confirman y después nadie les escribe.',
+      'Ventas perdidas por falta de seguimiento. Mensajes mezclados. Clientes que confirman y después nadie les escribe. Ahora si el cliente está seguro, compra directo y sin perder tiempo.',
     copyLanding:
       'Hacemos resumen del pedido, comprobante y seguimiento. Vos enfocáte en vender, no en perseguir chats.',
     contextualInfo:
@@ -68,7 +68,7 @@ const products: Product[] = [
     description: 'Los números que importan, sin abrir un Excel',
     modalTitle: 'Micro-Analytics: Los números que importan, sin abrir un Excel',
     whatDoes:
-      'Panel web simple con métricas clave (tiempo promedio de respuesta, consultas por producto, horarios pico, dónde se pierden clientes) + un chat tipo "analista de marketing" donde el dueño puede preguntar.',
+      'Panel web simple con métricas clave (tiempo promedio de respuesta, consultas por producto, horarios pico, dónde se pierden clientes) + un chat tipo "analista de marketing" donde el dueño puede preguntar cosas cómo: ¿Cuáles son los productos que más vendo? ¿Donde estoy perdiendo clientes? ¿Qué es lo que me trae más quejas?',
     painPoints: 'No tener idea real de qué funciona y qué no. Tomar decisiones "a ojo".',
     copyLanding: 'Datos que te dicen qué hacer. Sin descifrar hojas, sin fórmulas.',
     contextualInfo:
@@ -77,15 +77,15 @@ const products: Product[] = [
   {
     id: 'loyalty',
     icon: Heart,
-    title: 'Post-Sale & Loyalty Agent',
+    title: 'Seguimiento post-venta y envío de campañas',
     description: 'Que vuelvan. Y que recomienden.',
-    modalTitle: 'Post-Sale & Loyalty Agent: Que vuelvan. Y que recomienden.',
+    modalTitle: 'Seguimiento post-venta y envío de campañas: Que vuelvan. Y que recomienden.',
     whatDoes:
-      'Después de la venta, pide feedback real ("¿Cómo te quedó?"). Genera alertas si un cliente quedó disconforme. Arma campañas 1 a 1 y detecta oportunidades de re-compra automáticas.',
+      'Después de la venta, pide feedback real ("¿Cómo te quedó?"; "Que te pareció la calidad del producto?"). Genera alertas si un cliente quedó disconforme. Arma campañas 1 a 1 y detecta oportunidades de re-compra automáticas.',
     painPoints:
       'No hacer seguimiento. No colectar feedback real. No aprovechar la base de clientes. Perder clientes que "nunca más escribieron".',
     copyLanding:
-      'Seguimos hablando con tus clientes por vos: feedback, ofertas, recordatorios y campañas segmentadas. Todo para que vuelvan… y recomienden.',
+      'Seguimos hablando con tus clientes por vos: feedback, ofertas, recordatorios y campañas segmentadas. Todo para que vuelva, recomienden y tengan una experiencia al cliente que nadie más les ofrece.',
     contextualInfo:
       'Qué hace: Incluye armar fichas de clientes (Preferencias, Historial, Probabilidad de re-compra) automáticamente.',
   },
@@ -106,7 +106,70 @@ export default function Comercios() {
 
   return (
     <div className="min-h-screen bg-black-corp">
-      <div className="relative min-h-screen flex flex-col">
+      {/* MOBILE LAYOUT */}
+      <div className="md:hidden mobile-video-section">
+        {/* Video Header 16:9 */}
+        <div className="mobile-video-header">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            <source
+              src="https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Comercios.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <div className="video-overlay" />
+          <div className="video-content">
+            <h1 className="video-title">
+              IA Simple para Comercios
+            </h1>
+          </div>
+        </div>
+
+        {/* Cards Grid con fondo de imagen */}
+        <div className="relative py-4">
+          {/* Imagen de fondo */}
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: 'url(/fondo-cards-mobile.jpg)' }}
+          />
+          {/* Overlay difuminado */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/85 via-primary-dark/75 to-primary/70 backdrop-blur-sm" />
+
+          {/* Título de sección */}
+          <h2 className="relative z-10 text-center text-white text-lg font-bold pt-4 pb-2 px-4">
+            Lo nuevo en IA disponible para tu industria
+          </h2>
+
+          {/* Cards */}
+          <div className="relative z-10 mobile-cards-grid">
+            {products.map((product) => {
+              const Icon = product.icon;
+              return (
+                <button
+                  key={product.id}
+                  onClick={() => handleProductClick(product)}
+                  className="mobile-card bg-white/15 backdrop-blur-xl border border-white/20 rounded-xl hover:bg-white/25 transition-all duration-300 text-left shadow-lg"
+                >
+                  <div className="card-icon p-2 bg-primary/30 backdrop-blur-sm rounded-lg w-fit">
+                    <Icon className="w-5 h-5 text-white drop-shadow-md" />
+                  </div>
+                  <h3 className="text-sm font-bold text-white group-hover:text-white-accent transition-colors drop-shadow-md">
+                    {product.title}
+                  </h3>
+                  <p className="text-white/90 text-xs leading-relaxed drop-shadow-sm">{product.description}</p>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* DESKTOP LAYOUT - Sin cambios */}
+      <div className="hidden md:block relative min-h-screen">
         <video
           autoPlay
           muted
@@ -120,21 +183,23 @@ export default function Comercios() {
           />
         </video>
 
-        {/* Overlay sutil solo para contraste de texto */}
         <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/60 via-primary-dark/70 to-primary-dark/80" />
 
-        <div className="relative z-10 flex-1 flex flex-col justify-between pt-24">
+        <div className="relative z-10 flex flex-col justify-between pt-24 min-h-screen">
           <div className="text-center pt-4">
             <h1 className="text-xl md:text-2xl font-bold text-white mb-1 drop-shadow-lg">
               IA Simple para Comercios
             </h1>
             <p className="text-sm md:text-base text-white/90 drop-shadow-md max-w-3xl mx-auto">
-              Que venden por chat. Respondé sólo lo que importa.
+              Si vendés mucho por chat, ahora sólo vas a responder lo que importa.
             </p>
           </div>
 
-          <div className="px-4 pb-8">
-            <div className="max-w-7xl mx-auto">
+          <div className="px-4 pb-8 flex-1 flex items-end">
+            <div className="max-w-7xl mx-auto w-full">
+              <h2 className="text-center text-white text-xl font-bold mb-6 drop-shadow-lg">
+                Lo nuevo en IA disponible para tu industria
+              </h2>
               <div className="flex flex-wrap justify-center gap-4">
                 {products.map((product) => {
                   const Icon = product.icon;

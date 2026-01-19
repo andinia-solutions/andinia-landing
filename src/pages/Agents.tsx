@@ -234,18 +234,15 @@ export default function Agents() {
           }}
         />
 
-        {/* Unmute/Reset Button */}
+        {/* Botón de sonido - esquina superior izquierda */}
         <button
           onClick={isMuted ? handleUnmute : handleMute}
-          className="absolute top-24 left-4 z-20 p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 shadow-lg hover:bg-white/20 transition-all duration-300 group"
+          className="absolute z-20 top-24 left-4 p-3 bg-white/20 backdrop-blur-md rounded-full shadow-lg hover:bg-white/30 transition-all duration-300"
         >
           {isMuted ? (
-            <div className="flex items-center gap-2">
-              <VolumeX className="w-5 h-5 text-white/70 group-hover:text-white" />
-              <span className="text-xs text-white/70 group-hover:text-white font-medium pr-1">Desmutear video</span>
-            </div>
+            <VolumeX className="w-5 h-5 text-white" />
           ) : (
-            <Volume2 className="w-5 h-5 text-primary" />
+            <Volume2 className="w-5 h-5 text-white" />
           )}
         </button>
 

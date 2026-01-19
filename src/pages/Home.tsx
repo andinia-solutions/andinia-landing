@@ -116,7 +116,7 @@ export default function Home() {
         </div>
 
         {/* Content Section - Botones y links - overlapping the video */}
-        <div id="mobile-content" className="relative min-h-screen -mt-28 z-10 scroll-mt-28 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.3)]">
+        <div id="mobile-content" className="relative min-h-screen -mt-40 z-10 scroll-mt-44 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.3)]">
           {/* Fondo con imagen y bordes redondeados arriba */}
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-t-3xl overflow-hidden"

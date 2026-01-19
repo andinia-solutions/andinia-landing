@@ -102,19 +102,6 @@ export default function ChatKitWidget() {
   return (
     <>
       {/* Floating Button */}
-      {/* Custom Styles for Cursor Animation */}
-      <style>{`
-        @keyframes cursor-click {
-          0% { transform: translate(10px, 10px) scale(1); }
-          30% { transform: translate(0, 0) scale(1); }
-          40% { transform: translate(0, 0) scale(0.9); }
-          50% { transform: translate(0, 0) scale(1); }
-          80% { transform: translate(0, 0) scale(1); }
-          100% { transform: translate(10px, 10px) scale(1); }
-        }
-      `}</style>
-
-      {/* Floating Button */}
       <div className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${isOpen ? 'hidden' : 'flex'}`}>
         {/* Pulsing Back Glow */}
         <div className="absolute inset-0 bg-primary/40 rounded-full animate-ping pointer-events-none" />
@@ -130,30 +117,6 @@ export default function ChatKitWidget() {
           <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
 
           <MessageCircle className="w-8 h-8 text-white relative z-10" />
-
-          {/* Cursor Animation */}
-          <div
-            className="absolute bottom-2 right-2 pointer-events-none z-20 drop-shadow-xl"
-            style={{ animation: 'cursor-click 2.5s infinite ease-in-out' }}
-          >
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="white"
-              stroke="black"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="transform -rotate-12"
-            >
-              <path d="M14 4.1 12 6" />
-              <path d="m5.1 8-2.9-.8" />
-              <path d="m6 12-1.9 2" />
-              <path d="M7.2 2.2 8 5.1" />
-              <path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z" />
-            </svg>
-          </div>
         </button>
       </div>
 

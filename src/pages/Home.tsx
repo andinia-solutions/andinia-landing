@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Store, Utensils, Heart, Volume2, VolumeX, ArrowRight, ChevronDown } from 'lucide-react';
+import { Store, Utensils, Heart, Volume2, VolumeX, ArrowRight } from 'lucide-react';
 import Footer from '../components/Footer';
 import { useChat } from '../context/ChatContext';
 
@@ -47,45 +47,34 @@ export default function Home() {
   }, []);
 
   const handleUnmute = () => {
-    if (videoRef.current) {
+    const isMobile = window.innerWidth < 768; // md breakpoint
+    
+    if (!isMobile && videoRef.current) {
       videoRef.current.muted = false;
       videoRef.current.currentTime = 0;
       videoRef.current.play();
-      setIsMuted(false);
     }
-    if (mobileVideoRef.current) {
+    if (isMobile && mobileVideoRef.current) {
       // Quitar loop para que pueda terminar
       mobileVideoRef.current.loop = false;
       mobileVideoRef.current.muted = false;
       mobileVideoRef.current.currentTime = 0;
       mobileVideoRef.current.play();
-      setIsMuted(false);
     }
+    setIsMuted(false);
   };
 
   const handleMute = () => {
-    if (videoRef.current) {
+    const isMobile = window.innerWidth < 768; // md breakpoint
+    
+    if (!isMobile && videoRef.current) {
       videoRef.current.muted = true;
-      setIsMuted(true);
     }
-    if (mobileVideoRef.current) {
+    if (isMobile && mobileVideoRef.current) {
       mobileVideoRef.current.muted = true;
       mobileVideoRef.current.loop = true; // Restaurar loop
-      setIsMuted(true);
     }
-  };
-
-  const scrollToContent = () => {
-    const contentSection = document.getElementById('mobile-content');
-    if (contentSection) {
-      const rect = contentSection.getBoundingClientRect();
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const navbarHeight = 80; // Altura del navbar
-      window.scrollTo({
-        top: rect.top + scrollTop - navbarHeight,
-        behavior: 'smooth'
-      });
-    }
+    setIsMuted(true);
   };
 
   return (
@@ -112,50 +101,35 @@ export default function Home() {
             </video>
           </div>
 
-          {/* Botón de sonido - animado entre centro y esquina superior izquierda */}
+          {/* Botón de sonido - esquina superior izquierda */}
           <button
             onClick={isMuted ? handleUnmute : handleMute}
-            className={`absolute z-20 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-lg hover:bg-white/30 flex items-center space-x-2 transition-all duration-500 ease-in-out ${isMuted
-              ? 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-3'
-              : 'top-24 left-4 translate-x-0 translate-y-0'
-              }`}
+            className="absolute z-20 top-24 left-4 p-3 bg-white/20 backdrop-blur-md rounded-full shadow-lg hover:bg-white/30 transition-all duration-300"
           >
             {isMuted ? (
-              <>
-                <VolumeX className="w-5 h-5 text-white" />
-                <span className="text-white font-medium text-sm">Desmutear video</span>
-              </>
+              <VolumeX className="w-5 h-5 text-white" />
             ) : (
-              <>
-                <Volume2 className="w-5 h-5 text-white" />
-                <span className="text-white font-medium text-sm">Mutear video</span>
-              </>
+              <Volume2 className="w-5 h-5 text-white" />
             )}
           </button>
 
-          {/* Indicador de scroll */}
-          <div
-            onClick={scrollToContent}
-            className="absolute bottom-6 left-0 right-0 flex flex-col items-center cursor-pointer z-20"
-          >
-            <p className="text-white text-sm font-medium mb-2 drop-shadow-lg">Deslizá hacia abajo</p>
-            <div className="animate-bounce">
-              <ChevronDown className="w-8 h-8 text-white drop-shadow-lg" />
-            </div>
-          </div>
         </div>
 
-        {/* Content Section - Botones y links */}
-        <div id="mobile-content" className="relative min-h-screen scroll-mt-0">
-          {/* Fondo con imagen */}
+        {/* Content Section - Botones y links - overlapping the video */}
+        <div id="mobile-content" className="relative min-h-screen -mt-28 z-10 scroll-mt-28 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.3)]">
+          {/* Fondo con imagen y bordes redondeados arriba */}
           <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-t-3xl overflow-hidden"
             style={{ backgroundImage: 'url(/fondo-index.jpg)' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/85 via-primary-dark/75 to-primary/70 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/85 via-primary-dark/75 to-primary/70 backdrop-blur-sm rounded-t-3xl" />
 
           {/* Contenido */}
-          <div className="relative z-10 px-4 py-8">
+          <div className="relative z-10 px-4 pt-4 pb-8">
+            {/* Handle/pill indicator */}
+            <div className="flex justify-center mb-4">
+              <div className="w-12 h-1.5 bg-white/40 rounded-full" />
+            </div>
             <h1 className="text-2xl font-bold text-white mb-4">
               Elegí tu industria
             </h1>

@@ -64,7 +64,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="tel:+5492999000000" className="text-white-soft/90 hover:text-white-accent transition-colors">
-                  Teléfono: +54 9 299 XXX-XXXX
+                  Teléfono: +54 9 11 3620-4915
                 </a>
               </li>
               <li>
@@ -76,19 +76,6 @@ export default function Footer() {
                 </button>
               </li>
             </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
-          <p className="text-white-soft/80">© 2025 AndinIA. Todos los derechos reservados.</p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <a href="#" className="text-white-soft/80 hover:text-white-accent transition-colors">
-              Aviso Legal
-            </a>
-            <span className="text-white-soft/40">|</span>
-            <a href="#" className="text-white-soft/80 hover:text-white-accent transition-colors">
-              Política de Privacidad
-            </a>
           </div>
         </div>
       </div>

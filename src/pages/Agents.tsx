@@ -299,7 +299,7 @@ export default function Agents() {
 
           {/* Pitch y botón abajo de la navegación */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 px-4 mb-4">
-            <p className="text-white text-xl md:text-2xl font-semibold drop-shadow-lg flex-1 text-center md:text-left leading-relaxed line-clamp-2">
+            <p className="text-white text-sm md:text-2xl font-semibold drop-shadow-lg flex-1 text-center md:text-left leading-relaxed">
               {currentAgent.pitch}
             </p>
             <button

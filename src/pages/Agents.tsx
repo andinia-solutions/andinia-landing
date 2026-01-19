@@ -237,30 +237,47 @@ export default function Agents() {
         {/* Botón de sonido - esquina superior izquierda */}
         <button
           onClick={isMuted ? handleUnmute : handleMute}
-          className="absolute z-20 top-24 left-4 p-3 bg-white/20 backdrop-blur-md rounded-full shadow-lg hover:bg-white/30 transition-all duration-300"
+          className="absolute z-20 top-24 left-4 p-3 bg-white/20 backdrop-blur-md rounded-full shadow-lg hover:bg-white/30 transition-all duration-300 flex items-center gap-2"
         >
           {isMuted ? (
-            <VolumeX className="w-5 h-5 text-white" />
+            <>
+              <VolumeX className="w-5 h-5 text-white" />
+              <span className="hidden md:inline text-white text-sm font-medium pr-1">Desmutear video</span>
+            </>
           ) : (
-            <Volume2 className="w-5 h-5 text-white" />
+            <>
+              <Volume2 className="w-5 h-5 text-white" />
+              <span className="hidden md:inline text-white text-sm font-medium pr-1">Mutear video</span>
+            </>
           )}
         </button>
 
-        <div className="relative z-10 flex-1 flex flex-col justify-end pt-24 pb-4 px-4 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 items-end mb-4 mt-8 gap-4">
-            {/* Header con nombre y rol alineado a la izquierda */}
-            <div className="text-left w-full md:w-auto">
-              <div className="flex flex-col items-start justify-start gap-1">
-                <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-xl tracking-tight">
-                  {currentAgent.name}
-                </h1>
-                <span className="text-white text-lg md:text-xl font-medium drop-shadow-md tracking-wide leading-tight">
-                  {currentAgent.role}
-                </span>
-              </div>
-            </div>
+        {/* Header con nombre y rol - centrado arriba */}
+        <div className="absolute z-30 top-28 left-0 right-0 text-center">
+          <h1 className="text-2xl md:text-5xl font-bold text-white drop-shadow-xl tracking-tight">
+            {currentAgent.name}
+          </h1>
+          <span className="text-white text-xs md:text-lg font-medium drop-shadow-md tracking-wide leading-tight">
+            {currentAgent.role}
+          </span>
+        </div>
 
-            {/* Navegación entre agentes */}
+        <div className="relative z-10 flex-1 flex flex-col justify-end pt-24 pb-4 px-4 md:px-12">
+          {/* Pitch y botón */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 px-4 mb-4">
+            <p className="hidden md:block text-white md:text-lg font-semibold drop-shadow-lg flex-1 text-left leading-relaxed">
+              {currentAgent.pitch}
+            </p>
+            <button
+              onClick={() => setExpandedAgent(expandedAgent === currentAgent.id ? null : currentAgent.id)}
+              className="px-8 py-4 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white font-bold rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl whitespace-nowrap"
+            >
+              Ver capacidades completas
+            </button>
+          </div>
+
+          {/* Navegación entre agentes */}
+          <div className="flex justify-center items-center mb-4">
             <div className="flex justify-center items-center gap-4">
               <button
                 onClick={() => setCurrentAgentIndex((prev) => (prev - 1 + agents.length) % agents.length)}
@@ -289,22 +306,6 @@ export default function Agents() {
                 <ChevronRight className="w-6 h-6 text-white drop-shadow-lg" />
               </button>
             </div>
-
-            {/* Espaciador para mantener las flechas centradas en desktop */}
-            <div className="hidden md:block" />
-          </div>
-
-          {/* Pitch y botón abajo de la navegación */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 px-4 mb-4">
-            <p className="text-white text-sm md:text-2xl font-semibold drop-shadow-lg flex-1 text-center md:text-left leading-relaxed">
-              {currentAgent.pitch}
-            </p>
-            <button
-              onClick={() => setExpandedAgent(expandedAgent === currentAgent.id ? null : currentAgent.id)}
-              className="px-8 py-4 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white font-bold rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl whitespace-nowrap"
-            >
-              Ver capacidades completas
-            </button>
           </div>
 
           {/* Indicador de scroll hacia abajo */}
@@ -322,7 +323,7 @@ export default function Agents() {
 
       {expandedAgent === currentAgent.id && (
         <div
-          className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4 cursor-pointer"
+          className="fixed inset-0 bg-black/70 backdrop-blur-md z-[60] flex items-center justify-center p-4 cursor-pointer"
           onClick={() => setExpandedAgent(null)}
         >
           <div

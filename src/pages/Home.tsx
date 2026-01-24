@@ -48,7 +48,7 @@ export default function Home() {
 
   const handleUnmute = () => {
     const isMobile = window.innerWidth < 768; // md breakpoint
-    
+
     if (!isMobile && videoRef.current) {
       videoRef.current.muted = false;
       videoRef.current.currentTime = 0;
@@ -66,7 +66,7 @@ export default function Home() {
 
   const handleMute = () => {
     const isMobile = window.innerWidth < 768; // md breakpoint
-    
+
     if (!isMobile && videoRef.current) {
       videoRef.current.muted = true;
     }
@@ -95,8 +95,8 @@ export default function Home() {
               className="w-full h-full object-cover"
             >
               <source
-                src="https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/index.mp4"
-                type="video/mp4"
+                src="https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769278373/index_hggoua.webm"
+                type="video/webm"
               />
             </video>
           </div>
@@ -314,7 +314,7 @@ export default function Home() {
                   className="w-full h-full object-cover"
                 >
                   <source
-                    src="https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/index.mp4"
+                    src="https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769277743/index_zliczw.webm"
                     type="video/mp4"
                   />
                 </video>

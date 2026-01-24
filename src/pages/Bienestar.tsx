@@ -127,8 +127,8 @@ export default function Bienestar() {
             playsInline
           >
             <source
-              src="https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Bienestar.mp4"
-              type="video/mp4"
+              src="https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769278374/Bienestar_pjaoo2.webm"
+              type="video/webm"
             />
           </video>
           <div className="video-overlay" />
@@ -188,7 +188,7 @@ export default function Bienestar() {
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source
-            src="https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Bienestar.mp4"
+            src="https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769277739/Bienestar_adveef.webm"
             type="video/mp4"
           />
         </video>

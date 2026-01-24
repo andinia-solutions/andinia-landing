@@ -18,6 +18,7 @@ interface Agent {
   }[];
   cta: string;
   videoUrl?: string;
+  mobileVideoUrl?: string;
 }
 
 const agents: Agent[] = [
@@ -53,7 +54,8 @@ const agents: Agent[] = [
       },
     ],
     cta: 'Basta de dejar clientes colgados, que tu equipo invierta el tiempo en cerrar a los que realmente tienen intención de compra.',
-    videoUrl: 'https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Cande-Agents.mp4',
+    videoUrl: 'https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769277740/Cande-Agents_vrhbof.webm',
+    mobileVideoUrl: 'https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769278375/Cande-Agents_niwf9y.webm',
   },
   {
     id: 'marti',
@@ -88,7 +90,8 @@ const agents: Agent[] = [
       },
     ],
     cta: 'Generá story-telling y dale esa calidad profesional que antes era difícil de pagar.',
-    videoUrl: 'https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Marti-Agents.mp4',
+    videoUrl: 'https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769277744/Marti-Agents_cndnt9.webm',
+    mobileVideoUrl: 'https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769278376/Marti-Agents_larrjs.webm',
   },
   {
     id: 'marcos',
@@ -123,7 +126,8 @@ const agents: Agent[] = [
       },
     ],
     cta: 'Tus datos a un mensaje de distancia, dejá que la IA te muestre lo que necesitás para tomar las mejores decisiones.',
-    videoUrl: 'https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Marcos-Agents.mp4',
+    videoUrl: 'https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769277742/Marcos-Agents_u2tvfj.webm',
+    mobileVideoUrl: 'https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769278375/Marcos-Agents_czjbqs.webm',
   },
   {
     id: 'joel',
@@ -158,7 +162,8 @@ const agents: Agent[] = [
       },
     ],
     cta: 'Todos pueden molestar a Joel para preguntarle lo que quieran, ya no tienen que leerse un manual completo o esperar horas a que se desocupe un IT y les responda.',
-    videoUrl: 'https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Joel-Agents.mp4',
+    videoUrl: 'https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769277741/Joel-Agents_bixa2s.webm',
+    mobileVideoUrl: 'https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769278375/Joel-Agents_j4efld.webm',
   },
 ];
 
@@ -174,8 +179,17 @@ export default function Agents() {
   const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
   const [expandedAgent, setExpandedAgent] = useState<string | null>(null);
   const [isMuted, setIsMuted] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const arrowTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Detect mobile screen size
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleUnmute = () => {
     if (videoRef.current) {
@@ -207,7 +221,15 @@ export default function Agents() {
       videoRef.current.load();
       videoRef.current.play();
     }
-  }, [currentAgentIndex]);
+  }, [currentAgentIndex, isMobile]);
+
+  // Get the appropriate video URL based on screen size
+  const getVideoUrl = () => {
+    if (isMobile && currentAgent.mobileVideoUrl) {
+      return currentAgent.mobileVideoUrl;
+    }
+    return currentAgent.videoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+  };
 
   return (
     <div className="min-h-screen bg-black-corp relative overflow-hidden">
@@ -220,7 +242,7 @@ export default function Agents() {
           muted
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
-          src={currentAgent.videoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'}
+          src={getVideoUrl()}
         />
 
         {/* Blur Gradient Overlay */}
@@ -234,10 +256,9 @@ export default function Agents() {
           }}
         />
 
-        {/* Botón de sonido - esquina superior izquierda */}
         <button
           onClick={isMuted ? handleUnmute : handleMute}
-          className="absolute z-20 top-24 left-4 p-3 bg-white/20 backdrop-blur-md rounded-full shadow-lg hover:bg-white/30 transition-all duration-300 flex items-center gap-2"
+          className="absolute z-40 top-24 left-4 p-3 bg-white/20 backdrop-blur-md rounded-full shadow-lg hover:bg-white/30 transition-all duration-300 flex items-center gap-2"
         >
           {isMuted ? (
             <>

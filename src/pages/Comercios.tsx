@@ -117,8 +117,8 @@ export default function Comercios() {
             playsInline
           >
             <source
-              src="https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Comercios.mp4"
-              type="video/mp4"
+              src="https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769278373/Comercios_pptq1z.webm"
+              type="video/webm"
             />
           </video>
           <div className="video-overlay" />
@@ -178,7 +178,7 @@ export default function Comercios() {
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source
-            src="https://xuc1mufbju1siyiq.public.blob.vercel-storage.com/Comercios.mp4"
+            src="https://res.cloudinary.com/dl5qhxy7n/video/upload/v1769277739/Comercios_k9yidv.webm"
             type="video/mp4"
           />
         </video>

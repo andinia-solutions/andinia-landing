@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ChatKitWidget from './components/ChatKitWidget';
 import ScrollToTop from './components/ScrollToTop';
+import AnalyticsTracker from './components/AnalyticsTracker';
 import { ChatProvider } from './context/ChatContext';
 import Home from './pages/Home';
 import Comercios from './pages/Comercios';
@@ -15,6 +16,7 @@ function App() {
     <ChatProvider>
       <Router>
         <ScrollToTop />
+        <AnalyticsTracker />
         <div className="min-h-screen">
           <Navbar />
           <Routes>

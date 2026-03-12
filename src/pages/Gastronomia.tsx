@@ -209,6 +209,32 @@ export default function Gastronomia() {
         copyLanding={selectedProduct?.copyLanding || ''}
       />
 
+      {/* Demo Section */}
+      <section className="bg-gradient-to-br from-primary-dark to-primary py-12 px-4">
+        <div className="max-w-3xl mx-auto text-center">
+          <span className="inline-block bg-white/20 text-white text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-4">
+            Demo en vivo
+          </span>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+            ¿Querés ver cómo queda para tu restaurante?
+          </h2>
+          <p className="text-white/85 text-sm md:text-base mb-6 leading-relaxed">
+            Armamos una <strong className="text-white">landing inteligente + agente IA</strong> de muestra para que lo veas con tus propios ojos. Tiene datos ficticios, pero la experiencia es 100% real. Probala y después contanos qué te pareció.
+          </p>
+          <a
+            href="https://restaurants.demo.andinia.solutions/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-white text-primary font-bold text-sm md:text-base px-8 py-3 rounded-xl shadow-lg hover:bg-white/90 transition-all duration-200 mb-4"
+          >
+            Ver la demo ahora →
+          </a>
+          <p className="text-white/70 text-xs md:text-sm">
+            ¿Te copó? <button onClick={openChat} className="underline text-white/90 hover:text-white font-medium transition-colors">Escribinos</button> y te hacemos una igual para tu negocio.
+          </p>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
